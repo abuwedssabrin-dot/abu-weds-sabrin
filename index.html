@@ -1,188 +1,564 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seeni Sabrin Fathima weds Syed Abu Thahir</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeni Sabrin Fathima & F. Syed Abu Thahir - Wedding Invitation</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-secondary: #F3E5AB;
+            --gold-dark: #AA8322;
+            --bg-dark: #121212;
+            --bg-card: #1E1E1E;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:'Poppins',sans-serif;
-  background:#1a1a1a;
-  color:#fff;
-  overflow-x:hidden;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: #E5E7EB;
+            overflow-x: hidden;
+        }
 
-/* OPEN SCREEN */
-#overlay{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:#111;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:999;
-}
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
 
-#overlay h1{
-  font-family:'Playfair Display';
-  margin-bottom:20px;
-}
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
 
-.open-btn{
-  padding:12px 30px;
-  border:1px solid gold;
-  background:none;
-  color:gold;
-  cursor:pointer;
-}
+        /* Luxury Gold Text Gradient */
+        .text-gold {
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8322 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* MAIN */
-section{
-  padding:60px 20px;
-  text-align:center;
-}
+        /* Gold Border Gradient */
+        .border-gold {
+            border-image: linear-gradient(135deg, #D4AF37, #AA8322, #F3E5AB) 1;
+        }
 
-.title{
-  font-family:'Playfair Display';
-  font-size:28px;
-  color:gold;
-  margin-bottom:20px;
-}
+        /* Premium Textures and Overlays */
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
+        }
 
-.card{
-  border:1px solid rgba(255,215,0,0.4);
-  padding:20px;
-  margin:20px auto;
-  max-width:500px;
-  border-radius:10px;
-}
+        /* Islamic Geometric Silhouette */
+        .islamic-arch {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 0 100%, 0 25%);
+        }
 
-/* BUTTON */
-.btn{
-  padding:10px 20px;
-  border:1px solid gold;
-  background:none;
-  color:gold;
-  cursor:pointer;
-}
+        /* Custom glow effects */
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
 
-/* MUSIC BUTTON */
-#musicBtn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:black;
-  border:1px solid gold;
-  padding:10px;
-  border-radius:50%;
-  cursor:pointer;
-}
+        .glow-gold-hover:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            transition: all 0.5s ease;
+        }
 
-/* MAP */
-iframe{
-  width:100%;
-  height:300px;
-  border:none;
-  border-radius:10px;
-}
-</style>
+        /* Smooth reveal animations on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
 
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Opening Curtain Effect */
+        #opening-overlay {
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .slide-up {
+            transform: translateY(-100%);
+        }
+
+        /* Custom corner decorations and dividers */
+        .corner-top-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-top: 2px solid var(--gold-primary);
+            border-left: 2px solid var(--gold-primary);
+        }
+
+        .corner-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-bottom: 2px solid var(--gold-primary);
+            border-right: 2px solid var(--gold-primary);
+        }
+
+        /* Pulse animations for elegant aesthetics */
+        @keyframes subtle-pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .gold-pulse {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+
+        /* Blur for luxury backdrop */
+        .glass-card {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+            border-radius: 3px;
+        }
+
+        /* Floating music toggle animation */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-slow {
+            animation: spin-slow 8s linear infinite;
+        }
+    </style>
 </head>
+<body class="bg-pattern antialiased select-none">
 
-<body>
+    <!-- BACKGROUND AUDIO -->
+    <audio id="bgMusic" loop>
+        <!-- A soft instrumental royalty-free track as a reliable fallback for nasheed -->
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+        <!-- Main nasheed track -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
 
-<!-- OPEN SCREEN -->
+    <!-- MANDATORY OPENING SCREEN OVERLAY -->
+    <div id="opening-overlay" class="fixed inset-0 z-50 bg-[#121212] flex flex-col items-center justify-center text-center p-6 bg-pattern">
+        <!-- Artistic Border -->
+        <div class="absolute inset-12 border border-amber-700/30 pointer-events-none"></div>
+        <div class="absolute inset-8 border border-amber-600/10 pointer-events-none"></div>
+        
+        <div class="mb-8 z-10">
+            <i class="fa-solid fa-kaaba text-4xl text-gold mb-4 opacity-70"></i>
+            <h3 class="font-serif text-lg tracking-[0.2em] text-gray-400 mb-2 uppercase">Bismillah-ir-Rahman-ir-Rahim</h3>
+            <h1 class="font-serif text-4xl md:text-5xl text-gold mb-2">You're Invited</h1>
+            <p class="text-gray-300 font-light max-w-sm tracking-wide">To the blessed union of Sabrin & Syed Thahir</p>
+        </div>
 
-<div id="overlay">
-  <h1>You’re Invited</h1>
-  <button class="open-btn" onclick="openInvite()">Open Invitation</button>
-</div>
+        <button id="openInvitationBtn" class="z-10 px-8 py-3 glass-card text-gold font-medium tracking-[0.2em] rounded-full uppercase text-sm border-gold glow-gold-hover transition-all duration-300 transform hover:scale-105 cursor-pointer">
+            Open Invitation
+        </button>
+    </div>
 
-<!-- MUSIC -->
+    <!-- MAIN APP WRAPPER -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9bce42.mp3" type="audio/mp3">
-</audio>
+        <!-- FLOATING MUSIC BUTTON -->
+        <div class="fixed bottom-6 right-6 z-40">
+            <button id="musicToggle" class="w-12 h-12 glass-card rounded-full flex items-center justify-center text-gold border-gold glow-gold cursor-pointer transition-all duration-300 hover:scale-110">
+                <i id="musicIcon" class="fa-solid fa-music text-lg spin-slow"></i>
+            </button>
+        </div>
 
-<button id="musicBtn" onclick="toggleMusic()">🔊</button>
+        <!-- 1. HERO SECTION -->
+        <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-[url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80')] bg-cover bg-center bg-fixed">
+            <!-- Dark Tint Overlay -->
+            <div class="absolute inset-0 bg-black/85"></div>
+            
+            <!-- Floral/Geometric Silhouette Container -->
+            <div class="relative z-10 max-w-3xl w-full p-8 glass-card rounded-3xl border-gold reveal active">
+                
+                <div class="mb-6">
+                    <span class="font-serif text-lg tracking-[0.3em] text-gold uppercase opacity-90">Bismillah-ir-Rahman-ir-Rahim</span>
+                </div>
+                
+                <h3 class="font-serif text-xl md:text-2xl text-gray-300 mb-8 tracking-wide italic">In the name of Allah, the Most Gracious, the Most Merciful</h3>
 
-<!-- HERO -->
+                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-gold mb-4 leading-tight">
+                    Seeni Sabrin Fathima
+                </h1>
+                
+                <div class="flex items-center justify-center my-4">
+                    <div class="h-[1px] w-12 bg-amber-600/50"></div>
+                    <span class="font-script text-5xl md:text-6xl text-gold mx-6">&</span>
+                    <div class="h-[1px] w-12 bg-amber-600/50"></div>
+                </div>
 
-<section>
-  <h2 class="title">In the name of Allah</h2>
-  <h1 style="font-family:Playfair Display;font-size:32px;">
-    Seeni Sabrin Fathima<br> & <br>Syed Abu Thahir
-  </h1>
-  <p>Join us in our blessed union</p>
-</section>
+                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-gold mb-8 leading-tight">
+                    F. Syed Abu Thahir
+                </h1>
 
-<!-- EVENT -->
+                <p class="font-light text-lg tracking-[0.1em] text-gray-200 mt-6 max-w-md mx-auto">
+                    Join us in our blessed union as we begin our journey together in love and faith.
+                </p>
 
-<section>
-  <div class="title">Wedding Details</div>
+                <div class="mt-8">
+                    <div class="text-sm tracking-[0.3em] text-gold uppercase mb-2">Save The Date</div>
+                    <div class="font-serif text-2xl text-white">May 17, 2026</div>
+                </div>
+                
+                <div class="mt-12 flex justify-center">
+                    <i class="fa-solid fa-chevron-down text-gold text-2xl animate-bounce"></i>
+                </div>
+            </div>
+        </section>
 
-  <div class="card">
-    <h3>Nikah</h3>
-    <p>Sunday, May 17, 2026</p>
-    <p>11:00 AM – 12:00 PM</p>
-  </div>
 
-  <div class="card">
-    <h3>Walimah</h3>
-    <p>12:00 PM onwards</p>
-  </div>
-</section>
+        <!-- 2. FAMILY DETAILS SECTION -->
+        <section class="relative py-20 px-6 bg-[#181818] border-t border-b border-amber-900/20">
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 text-center relative z-10">
+                
+                <!-- Bride's Family -->
+                <div class="glass-card p-10 rounded-2xl border-gold reveal relative">
+                    <div class="corner-top-left"></div>
+                    <div class="corner-bottom-right"></div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-venus text-gold text-3xl opacity-80"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl text-gold mb-2">The Bride</h3>
+                    <h2 class="font-serif text-3xl text-white mb-4">Seeni Sabrin Fathima</h2>
+                    <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                    <p class="text-gray-400 text-sm tracking-wider uppercase mb-2">Daughter of</p>
+                    <p class="text-white text-lg font-medium">Mr. Hassan Abdul Cader</p>
+                    <p class="text-white text-lg font-medium">&</p>
+                    <p class="text-white text-lg font-medium">Mrs. Farzana</p>
+                </div>
 
-<!-- LOCATION -->
+                <!-- Groom's Family -->
+                <div class="glass-card p-10 rounded-2xl border-gold reveal relative">
+                    <div class="corner-top-left"></div>
+                    <div class="corner-bottom-right"></div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-mars text-gold text-3xl opacity-80"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl text-gold mb-2">The Groom</h3>
+                    <h2 class="font-serif text-3xl text-white mb-4">F. Syed Abu Thahir</h2>
+                    <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                    <p class="text-gray-400 text-sm tracking-wider uppercase mb-2">Son of</p>
+                    <p class="text-white text-lg font-medium">Mr. A. S. Feroz Khan</p>
+                    <p class="text-white text-lg font-medium">&</p>
+                    <p class="text-white text-lg font-medium">Mrs. S. Nazrath Begum</p>
+                </div>
 
-<section>
-  <div class="title">Location</div>
+            </div>
+        </section>
 
-  <iframe src="https://maps.google.com/maps?q=Thahir%20Bungalow%20Keelakarai&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
 
-<br><br> <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="btn">Open in Google Maps</a>
+        <!-- 3. EVENT DETAILS SECTION -->
+        <section class="relative py-20 px-6 bg-[#121212] bg-pattern">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-4xl text-gold mb-4 reveal">Wedding Events</h2>
+                <p class="text-gray-400 mb-12 tracking-wider reveal">Insha'Allah, the celebration will take place on</p>
 
-</section>
+                <div class="mb-12 glass-card inline-block py-6 px-12 rounded-xl border border-gold/50 reveal">
+                    <h3 class="font-serif text-2xl text-white mb-2">Sunday, May 17, 2026</h3>
+                    <p class="text-gold tracking-widest text-sm uppercase">30 Dhul Qa’dah 1447 AH</p>
+                </div>
 
-<!-- CONTACT -->
+                <div class="grid md:grid-cols-2 gap-8 mt-4">
+                    <!-- Nikah -->
+                    <div class="glass-card p-8 rounded-2xl border-gold group hover:scale-105 transition-all duration-500 reveal">
+                        <div class="mb-4 inline-block p-4 rounded-full border border-amber-600/30 group-hover:border-amber-500 transition-colors">
+                            <i class="fa-solid fa-ring text-gold text-3xl"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl text-white mb-4">Nikah</h3>
+                        <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                        <p class="text-gray-400 mb-2">Timing</p>
+                        <p class="text-xl text-white font-semibold">11:00 AM – 12:00 PM</p>
+                    </div>
 
-<section>
-  <div class="title">Contact</div>
-  <p>📞 98409 50555</p>
-  <p>📞 9840928566</p>
-</section>
+                    <!-- Walimah -->
+                    <div class="glass-card p-8 rounded-2xl border-gold group hover:scale-105 transition-all duration-500 reveal">
+                        <div class="mb-4 inline-block p-4 rounded-full border border-amber-600/30 group-hover:border-amber-500 transition-colors">
+                            <i class="fa-solid fa-utensils text-gold text-3xl"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl text-white mb-4">Walimah</h3>
+                        <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                        <p class="text-gray-400 mb-2">Timing</p>
+                        <p class="text-xl text-white font-semibold">12:00 PM onwards</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- RSVP -->
 
-<section>
-  <div class="title">RSVP</div>
-  <input type="text" placeholder="Your Name" id="name"><br><br>
-  <button class="btn" onclick="alert('RSVP Submitted')">Submit</button>
-</section>
+        <!-- 4. LOCATION SECTION -->
+        <section class="relative py-20 px-6 bg-[#181818]">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-4xl text-gold mb-4 reveal">The Venue</h2>
+                <p class="text-white text-xl mb-8 font-light reveal">Thahir Bungalow, Keelakarai</p>
 
-<script>
-let music = document.getElementById("music");
+                <div class="rounded-2xl overflow-hidden glass-card h-80 w-full mb-8 border border-amber-600/20 glow-gold reveal">
+                    <!-- Standard Google Maps Embed. Since real embed links are URL-specific, using a clean placeholder iframe or precise coordinates if known -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.670692735163!2d78.77708577583689!3d9.228186485854747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0185994270d4d1%3A0xe543fa02bc56041c!2sKilakarai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709400000000!5m2!1sen!2sin" 
+                        class="w-full h-full border-0 grayscale opacity-80" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
 
-function openInvite(){
-  document.getElementById("overlay").style.display="none";
-  music.play();
-}
+                <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="inline-flex items-center px-8 py-3 glass-card text-gold font-medium rounded-full uppercase tracking-wider text-sm border-gold glow-gold-hover transition-all duration-300 transform hover:scale-105 reveal">
+                    <i class="fa-solid fa-map-location-dot mr-2"></i> Open in Google Maps
+                </a>
+            </div>
+        </section>
 
-function toggleMusic(){
-  if(music.paused){
-    music.play();
-  }else{
-    music.pause();
-  }
-}
-</script>
 
+        <!-- 5. CONTACT SECTION -->
+        <section class="relative py-16 px-6 bg-[#121212] border-t border-amber-900/20">
+            <div class="max-w-md mx-auto text-center glass-card p-8 rounded-2xl border border-gold/40 reveal">
+                <h3 class="font-serif text-2xl text-gold mb-6">Contact & Enquiries</h3>
+                
+                <div class="flex flex-col space-y-4">
+                    <a href="tel:9840950555" class="flex items-center justify-center space-x-3 text-white hover:text-gold transition-colors">
+                        <i class="fa-solid fa-phone text-gold"></i>
+                        <span class="text-lg">98409 50555</span>
+                    </a>
+                    <a href="tel:9840928566" class="flex items-center justify-center space-x-3 text-white hover:text-gold transition-colors">
+                        <i class="fa-solid fa-phone text-gold"></i>
+                        <span class="text-lg">98409 28566</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 6. RSVP SECTION -->
+        <section class="relative py-20 px-6 bg-[#181818] bg-pattern">
+            <div class="max-w-lg mx-auto glass-card p-10 rounded-2xl border-gold reveal">
+                <h2 class="font-serif text-3xl text-gold text-center mb-4">R.S.V.P</h2>
+                <p class="text-center text-gray-400 mb-8">Please let us know your presence</p>
+
+                <form id="rsvpForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-2 font-medium tracking-wide">Full Name</label>
+                        <input type="text" id="rsvp_name" required class="w-full bg-[#121212] border border-amber-600/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold transition-colors" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button type="button" onclick="handleRSVP('Will Attend')" class="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                            Will Attend
+                        </button>
+                        <button type="button" onclick="handleRSVP('Cannot Attend')" class="w-full py-3 border border-gray-600 text-gray-300 hover:text-white hover:border-white font-medium rounded-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                            Cannot Attend
+                        </button>
+                    </div>
+                </form>
+
+                <div id="rsvp-status" class="hidden mt-6 text-center text-gold font-medium p-4 border border-gold/30 rounded-lg glass-card animate-pulse">
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 7. WISH / GIFT SECTION -->
+        <section class="relative py-20 px-6 bg-[#121212]">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="font-serif text-4xl text-gold mb-4 reveal">Send Your Wishes</h2>
+                <p class="text-gray-400 mb-12 max-w-lg mx-auto reveal">Your prayers and blessings are the greatest gifts for us. If you wish to send a gift, you may use the details below.</p>
+
+                <div class="grid md:grid-cols-2 gap-8 reveal">
+                    <!-- Bank Transfer Details -->
+                    <div class="glass-card p-8 rounded-2xl border-gold text-left h-full flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-serif text-xl text-white mb-4"><i class="fa-solid fa-building-columns text-gold mr-2"></i> Bank Transfer</h3>
+                            <p class="text-gray-400 text-sm mb-1">Account Holder</p>
+                            <p class="text-white font-medium mb-3">F. Syed Abu Thahir</p>
+                            
+                            <p class="text-gray-400 text-sm mb-1">Account Number</p>
+                            <p id="accNumber" class="text-white font-medium mb-3">123456789012</p>
+                            
+                            <p class="text-gray-400 text-sm mb-1">IFSC Code</p>
+                            <p id="ifscCode" class="text-white font-medium">SBIN0012345</p>
+                        </div>
+                        <button onclick="copyToClipboard('accNumber', 'Account Number')" class="mt-6 w-full py-2.5 glass-card text-gold rounded-lg text-sm border-gold hover:bg-gold hover:text-black transition-all duration-300 font-medium cursor-pointer">
+                            Copy Account Details
+                        </button>
+                    </div>
+
+                    <!-- UPI Details -->
+                    <div class="glass-card p-8 rounded-2xl border-gold text-left h-full flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-serif text-xl text-white mb-4"><i class="fa-solid fa-mobile-screen text-gold mr-2"></i> UPI Address</h3>
+                            <p class="text-gray-400 text-sm mb-1">Name</p>
+                            <p class="text-white font-medium mb-3">Syed Abu Thahir</p>
+                            
+                            <p class="text-gray-400 text-sm mb-1">UPI ID</p>
+                            <p id="upiId" class="text-white font-medium text-lg">9840950555@upi</p>
+                        </div>
+                        <button onclick="copyToClipboard('upiId', 'UPI ID')" class="mt-6 w-full py-2.5 glass-card text-gold rounded-lg text-sm border-gold hover:bg-gold hover:text-black transition-all duration-300 font-medium cursor-pointer">
+                            Copy UPI ID
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="copy-toast" class="fixed top-12 left-1/2 transform -translate-x-1/2 glass-card border-gold text-gold font-medium text-sm py-3 px-8 rounded-full shadow-2xl tracking-wide opacity-0 transition-opacity duration-300 z-50 pointer-events-none">
+                    Copied to clipboard!
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 8. FOOTER -->
+        <footer class="relative py-16 px-6 bg-[#0a0a0a] text-center border-t border-amber-900/40">
+            <div class="max-w-2xl mx-auto">
+                <i class="fa-solid fa-heart text-gold text-2xl mb-4 gold-pulse"></i>
+                <h2 class="font-serif text-2xl md:text-3xl text-gold mb-4">May Allah bless this union with love and barakah.</h2>
+                <p class="text-gray-500 font-light text-sm tracking-widest uppercase mb-8">Barakallahu lakum wa baraka 'alaykum wa jama'a baynakuma fi khayr</p>
+                <div class="h-[1px] w-32 bg-amber-600/30 mx-auto mb-8"></div>
+                <p class="text-gray-600 text-xs tracking-wide">&copy; 2026 Seeni Sabrin Fathima & F. Syed Abu Thahir. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Opening Invitation Controller
+        const openingOverlay = document.getElementById('opening-overlay');
+        const mainContent = document.getElementById('main-content');
+        const openInvitationBtn = document.getElementById('openInvitationBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+
+        let isMusicPlaying = false;
+
+        openInvitationBtn.addEventListener('click', () => {
+            // Dismiss Overlay
+            openingOverlay.classList.add('slide-up');
+            
+            // Show main content
+            mainContent.classList.remove('opacity-0');
+            
+            // Allow interactions
+            document.body.classList.remove('select-none');
+
+            // Autoplay music
+            bgMusic.play().then(() => {
+                isMusicPlaying = true;
+                musicIcon.classList.add('spin-slow');
+                musicIcon.classList.remove('fa-volume-xmark');
+                musicIcon.classList.add('fa-music');
+            }).catch(error => {
+                console.log("Music play blocked or failed: ", error);
+            });
+
+            // Start reveal logic
+            handleScrollReveal();
+        });
+
+        // Music Toggle Control
+        musicToggle.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicIcon.classList.remove('spin-slow');
+                musicIcon.classList.remove('fa-music');
+                musicIcon.classList.add('fa-volume-xmark');
+            } else {
+                bgMusic.play();
+                isMusicPlaying = true;
+                musicIcon.classList.add('spin-slow');
+                musicIcon.classList.remove('fa-volume-xmark');
+                musicIcon.classList.add('fa-music');
+            }
+        });
+
+        // RSVP Handler
+        function handleRSVP(status) {
+            const nameInput = document.getElementById('rsvp_name');
+            const statusBox = document.getElementById('rsvp-status');
+
+            if (!nameInput.value.trim()) {
+                alert("Please enter your name.");
+                return;
+            }
+
+            // Hide form inputs for a moment or simulate sending
+            statusBox.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Thank you, ${nameInput.value.trim()}! Your response "${status}" has been saved.`;
+            statusBox.classList.remove('hidden');
+
+            nameInput.value = ''; // clear input
+        }
+
+        // Copy to clipboard utility
+        function copyToClipboard(elementId, label) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const toast = document.getElementById('copy-toast');
+                toast.innerText = `${label} copied successfully!`;
+                toast.classList.remove('opacity-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        // Scroll Reveal Utility
+        function handleScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        }
+
+        // Run scroll reveal setup on dom load
+        document.addEventListener("DOMContentLoaded", function() {
+            // Keep body non-interactive during overlay
+            document.body.classList.add('select-none');
+        });
+    </script>
 </body>
 </html>
