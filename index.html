@@ -1,58 +1,188 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abu & Sabrina's Wedding</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 50px 20px;
-        }
-        h1 {
-            margin: 0;
-            font-size: 3em;
-        }
-        .wedding-details {
-            padding: 50px 20px;
-        }
-        .wedding-details h2 {
-            color: #333;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeni Sabrin Fathima weds Syed Abu Thahir</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#1a1a1a;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* OPEN SCREEN */
+#overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#111;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:999;
+}
+
+#overlay h1{
+  font-family:'Playfair Display';
+  margin-bottom:20px;
+}
+
+.open-btn{
+  padding:12px 30px;
+  border:1px solid gold;
+  background:none;
+  color:gold;
+  cursor:pointer;
+}
+
+/* MAIN */
+section{
+  padding:60px 20px;
+  text-align:center;
+}
+
+.title{
+  font-family:'Playfair Display';
+  font-size:28px;
+  color:gold;
+  margin-bottom:20px;
+}
+
+.card{
+  border:1px solid rgba(255,215,0,0.4);
+  padding:20px;
+  margin:20px auto;
+  max-width:500px;
+  border-radius:10px;
+}
+
+/* BUTTON */
+.btn{
+  padding:10px 20px;
+  border:1px solid gold;
+  background:none;
+  color:gold;
+  cursor:pointer;
+}
+
+/* MUSIC BUTTON */
+#musicBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:black;
+  border:1px solid gold;
+  padding:10px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* MAP */
+iframe{
+  width:100%;
+  height:300px;
+  border:none;
+  border-radius:10px;
+}
+</style>
+
 </head>
+
 <body>
-    <header>
-        <h1>Abu & Sabrina</h1>
-        <p>We're getting married!</p>
-    </header>
 
-    <section class="wedding-details">
-        <h2>Wedding Details</h2>
-        <p>Date: [Insert Date]</p>
-        <p>Time: [Insert Time]</p>
-        <p>Location: [Insert Location]</p>
-        <p>Please join us for our special day!</p>
-    </section>
+<!-- OPEN SCREEN -->
 
-    <footer>
-        <p>&copy; 2024 Abu & Sabrina. All rights reserved.</p>
-    </footer>
+<div id="overlay">
+  <h1>You’re Invited</h1>
+  <button class="open-btn" onclick="openInvite()">Open Invitation</button>
+</div>
+
+<!-- MUSIC -->
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9bce42.mp3" type="audio/mp3">
+</audio>
+
+<button id="musicBtn" onclick="toggleMusic()">🔊</button>
+
+<!-- HERO -->
+
+<section>
+  <h2 class="title">In the name of Allah</h2>
+  <h1 style="font-family:Playfair Display;font-size:32px;">
+    Seeni Sabrin Fathima<br> & <br>Syed Abu Thahir
+  </h1>
+  <p>Join us in our blessed union</p>
+</section>
+
+<!-- EVENT -->
+
+<section>
+  <div class="title">Wedding Details</div>
+
+  <div class="card">
+    <h3>Nikah</h3>
+    <p>Sunday, May 17, 2026</p>
+    <p>11:00 AM – 12:00 PM</p>
+  </div>
+
+  <div class="card">
+    <h3>Walimah</h3>
+    <p>12:00 PM onwards</p>
+  </div>
+</section>
+
+<!-- LOCATION -->
+
+<section>
+  <div class="title">Location</div>
+
+  <iframe src="https://maps.google.com/maps?q=Thahir%20Bungalow%20Keelakarai&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+
+<br><br> <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="btn">Open in Google Maps</a>
+
+</section>
+
+<!-- CONTACT -->
+
+<section>
+  <div class="title">Contact</div>
+  <p>📞 98409 50555</p>
+  <p>📞 9840928566</p>
+</section>
+
+<!-- RSVP -->
+
+<section>
+  <div class="title">RSVP</div>
+  <input type="text" placeholder="Your Name" id="name"><br><br>
+  <button class="btn" onclick="alert('RSVP Submitted')">Submit</button>
+</section>
+
+<script>
+let music = document.getElementById("music");
+
+function openInvite(){
+  document.getElementById("overlay").style.display="none";
+  music.play();
+}
+
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+</script>
+
 </body>
 </html>
