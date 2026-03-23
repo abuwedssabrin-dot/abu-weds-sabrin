@@ -1,1046 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding Invitation – Sabrin & Abu Thahir</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Cinzel+Decorative:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --gold-pale: #f5e4b3;
-    --gold-dim: #8a6f35;
-    --dark: #0d0d0d;
-    --dark-2: #141414;
-    --dark-3: #1a1a1a;
-    --dark-4: #222;
-    --text-muted: #888;
-    --text-soft: #bbb;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background-color: var(--dark);
-    color: var(--text-soft);
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-    cursor: default;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-  }
-
-  /* ── OPENING OVERLAY ── */
-  #overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: #080808;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    transition: opacity 1.2s ease, visibility 1.2s ease;
-  }
-  #overlay.hidden { opacity: 0; visibility: hidden; }
-
-  .overlay-ornament {
-    width: 180px;
-    opacity: 0;
-    animation: fadeUp 1.2s ease 0.3s forwards;
-  }
-
-  .overlay-bismillah {
-    font-family: 'Amiri', serif;
-    font-size: clamp(1.1rem, 3vw, 1.5rem);
-    color: var(--gold-dim);
-    letter-spacing: 0.1em;
-    opacity: 0;
-    animation: fadeUp 1.2s ease 0.6s forwards;
-  }
-
-  .overlay-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 8vw, 4.5rem);
-    color: var(--gold-light);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-align: center;
-    line-height: 1.1;
-    opacity: 0;
-    animation: fadeUp 1.2s ease 0.9s forwards;
-    text-shadow: 0 0 40px rgba(201,168,76,0.4);
-  }
-
-  .overlay-sub {
-    font-size: clamp(0.75rem, 2vw, 0.9rem);
-    color: var(--text-muted);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 1.2s ease 1.1s forwards;
-  }
-
-  .overlay-divider {
-    width: 80px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0;
-    animation: fadeUp 1s ease 1.3s forwards;
-  }
-
-  #openBtn {
-    margin-top: 1rem;
-    padding: 0.85rem 3rem;
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold-light);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeUp 1s ease 1.5s forwards;
-  }
-  #openBtn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(201,168,76,0.15), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.4s ease;
-  }
-  #openBtn:hover { box-shadow: 0 0 30px rgba(201,168,76,0.3); color: #fff; }
-  #openBtn:hover::before { transform: translateX(0); }
-
-  /* ── MUSIC TOGGLE ── */
-  #musicBtn {
-    position: fixed;
-    bottom: 1.8rem;
-    right: 1.8rem;
-    z-index: 9000;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(20,20,20,0.9);
-    border: 1px solid var(--gold-dim);
-    color: var(--gold-light);
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(201,168,76,0.15);
-  }
-  #musicBtn:hover { box-shadow: 0 0 30px rgba(201,168,76,0.4); transform: scale(1.05); }
-
-  /* ── SECTIONS COMMON ── */
-  section { padding: 6rem 1.5rem; position: relative; }
-
-  .container { max-width: 800px; margin: 0 auto; }
-
-  .section-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    color: var(--gold-light);
-    text-align: center;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-  }
-
-  .gold-line {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1.2rem auto;
-  }
-
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 5rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201,168,76,0.04) 0%, transparent 60%);
-  }
-
-  .hero-bismillah {
-    font-family: 'Amiri', serif;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-    direction: rtl;
-  }
-
-  .hero-in-name {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.45em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 2rem;
-  }
-
-  .hero-floral { width: min(280px, 70vw); margin: 0 auto 2.5rem; opacity: 0.75; }
-
-  .hero-names {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 7vw, 4rem);
-    color: var(--gold-light);
-    font-weight: 400;
-    line-height: 1.15;
-    text-shadow: 0 0 60px rgba(201,168,76,0.35);
-    margin-bottom: 0.8rem;
-  }
-
-  .hero-amp {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--gold-dim);
-    display: block;
-    margin: 0.3rem 0;
-  }
-
-  .hero-subtitle {
-    font-size: 0.78rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 1.5rem;
-  }
-
-  /* ── CORNER ORNAMENTS ── */
-  .corner-ornament {
-    position: absolute;
-    width: 100px;
-    opacity: 0.3;
-  }
-  .corner-ornament.tl { top: 1.5rem; left: 1.5rem; transform: rotate(0deg); }
-  .corner-ornament.tr { top: 1.5rem; right: 1.5rem; transform: rotate(90deg); }
-  .corner-ornament.bl { bottom: 1.5rem; left: 1.5rem; transform: rotate(270deg); }
-  .corner-ornament.br { bottom: 1.5rem; right: 1.5rem; transform: rotate(180deg); }
-
-  /* ── FAMILY SECTION ── */
-  #family { background: var(--dark-2); }
-
-  .family-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-  @media(max-width: 600px) { .family-grid { grid-template-columns: 1fr; } }
-
-  .family-card {
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 4px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    background: linear-gradient(135deg, rgba(201,168,76,0.04), transparent);
-    position: relative;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .family-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(201,168,76,0.12);
-  }
-
-  .family-role {
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 1rem;
-  }
-
-  .family-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1rem, 3vw, 1.25rem);
-    color: var(--gold-light);
-    font-weight: 400;
-    margin-bottom: 1rem;
-    line-height: 1.4;
-  }
-
-  .family-parents {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.9;
-  }
-
-  .family-parents strong { color: var(--text-soft); font-weight: 400; }
-
-  /* ── EVENT SECTION ── */
-  #events { background: var(--dark-3); }
-
-  .events-date-block {
-    text-align: center;
-    margin: 2.5rem auto;
-    padding: 2rem;
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 4px;
-    max-width: 420px;
-    background: rgba(201,168,76,0.03);
-  }
-
-  .events-date {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    color: var(--gold-light);
-    margin-bottom: 0.4rem;
-    font-weight: 400;
-  }
-
-  .events-hijri {
-    font-size: 0.75rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.2em;
-  }
-
-  .events-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-  @media(max-width: 500px) { .events-grid { grid-template-columns: 1fr; } }
-
-  .event-card {
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 4px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    background: linear-gradient(160deg, rgba(201,168,76,0.06), transparent);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .event-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .event-card:hover { transform: translateY(-4px); box-shadow: 0 10px 40px rgba(201,168,76,0.15); }
-
-  .event-icon { font-size: 1.6rem; margin-bottom: 0.8rem; display: block; }
-
-  .event-type {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.9rem;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.08em;
-  }
-
-  .event-time {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-  }
-
-  /* ── LOCATION SECTION ── */
-  #location { background: var(--dark-2); }
-
-  .map-wrapper {
-    margin-top: 2.5rem;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid rgba(201,168,76,0.2);
-    box-shadow: 0 0 40px rgba(0,0,0,0.6);
-  }
-
-  .map-wrapper iframe { display: block; }
-
-  .location-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1.8rem;
-    padding: 0.8rem 2.5rem;
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold-light);
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-  }
-  .location-btn:hover { background: rgba(201,168,76,0.12); box-shadow: 0 0 20px rgba(201,168,76,0.25); }
-
-  .location-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
-    color: var(--gold-light);
-    margin-top: 1.5rem;
-    text-align: center;
-    font-weight: 400;
-  }
-
-  /* ── CONTACT SECTION ── */
-  #contact { background: var(--dark-3); text-align: center; }
-
-  .contact-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-    margin-top: 2.5rem;
-  }
-
-  .contact-card {
-    border: 1px solid rgba(201,168,76,0.2);
-    padding: 1.5rem 2.5rem;
-    border-radius: 4px;
-    background: rgba(201,168,76,0.03);
-    transition: all 0.3s ease;
-  }
-  .contact-card:hover { box-shadow: 0 0 25px rgba(201,168,76,0.15); }
-
-  .contact-number {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
-    color: var(--gold-light);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-  }
-
-  /* ── RSVP SECTION ── */
-  #rsvp { background: var(--dark-2); text-align: center; }
-
-  .rsvp-form { max-width: 480px; margin: 2.5rem auto 0; }
-
-  .rsvp-input {
-    width: 100%;
-    padding: 0.9rem 1.2rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.25);
-    color: var(--gold-pale);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.05em;
-    border-radius: 2px;
-    outline: none;
-    margin-bottom: 1.2rem;
-    transition: border-color 0.3s ease;
-  }
-  .rsvp-input::placeholder { color: var(--text-muted); }
-  .rsvp-input:focus { border-color: var(--gold); }
-
-  .rsvp-buttons { display: flex; gap: 1rem; justify-content: center; }
-
-  .rsvp-btn {
-    flex: 1;
-    max-width: 200px;
-    padding: 0.85rem 1rem;
-    background: transparent;
-    border: 1px solid rgba(201,168,76,0.4);
-    color: var(--gold-light);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-  }
-  .rsvp-btn:hover { background: rgba(201,168,76,0.12); box-shadow: 0 0 20px rgba(201,168,76,0.2); }
-  .rsvp-btn.attend { border-color: var(--gold); }
-  .rsvp-btn.attend:hover { background: rgba(201,168,76,0.2); }
-
-  .rsvp-message {
-    margin-top: 1.5rem;
-    padding: 1rem 1.5rem;
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: var(--gold-light);
-    background: rgba(201,168,76,0.06);
-    display: none;
-    animation: fadeUp 0.6s ease forwards;
-  }
-  .rsvp-message.show { display: block; }
-
-  /* ── WISHES SECTION ── */
-  #wishes { background: var(--dark-3); text-align: center; }
-
-  .wishes-card {
-    max-width: 480px;
-    margin: 2.5rem auto 0;
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 4px;
-    padding: 2rem;
-    background: rgba(201,168,76,0.03);
-    position: relative;
-  }
-  .wishes-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
-  .wishes-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 0.5rem;
-  }
-
-  .wishes-detail {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--gold-light);
-    margin: 0.3rem 0;
-    font-weight: 400;
-  }
-
-  .copy-btn {
-    margin-top: 1.2rem;
-    padding: 0.65rem 2rem;
-    background: transparent;
-    border: 1px solid rgba(201,168,76,0.3);
-    color: var(--gold-dim);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-  }
-  .copy-btn:hover { color: var(--gold-light); border-color: var(--gold); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--dark);
-    padding: 4rem 1.5rem 3rem;
-    text-align: center;
-    border-top: 1px solid rgba(201,168,76,0.12);
-  }
-
-  .footer-dua {
-    font-family: 'Amiri', serif;
-    font-size: clamp(1rem, 3vw, 1.3rem);
-    color: var(--gold);
-    margin-bottom: 1rem;
-    direction: rtl;
-    opacity: 0.85;
-  }
-
-  .footer-dua-en {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(0.85rem, 2vw, 1rem);
-    color: var(--text-muted);
-    max-width: 500px;
-    margin: 0 auto 2rem;
-    line-height: 1.8;
-  }
-
-  .footer-names {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.7rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.2em;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-copy {
-    font-size: 0.65rem;
-    color: rgba(136,136,136,0.4);
-    letter-spacing: 0.15em;
-  }
-
-  /* ── SCROLL ANIMATIONS ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 15px rgba(201,168,76,0.1); }
-    50% { box-shadow: 0 0 30px rgba(201,168,76,0.25); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-
-  .float-anim { animation: float 4s ease-in-out infinite; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--dark); }
-  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
-</style>
-</head>
-<body>
-
-<!-- AUDIO (hidden) -->
-<audio id="bgMusic" loop preload="none">
-  <!-- Using a public domain nasheed-style audio -->
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<!-- ── OPENING OVERLAY ── -->
-<div id="overlay">
-  <!-- SVG floral ornament -->
-  <svg class="overlay-ornament" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g opacity="0.85">
-      <circle cx="100" cy="100" r="70" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="4 4"/>
-      <circle cx="100" cy="100" r="55" stroke="#c9a84c" stroke-width="0.3"/>
-      <path d="M100 30 C110 50 130 60 100 70 C70 60 90 50 100 30Z" fill="#c9a84c" opacity="0.6"/>
-      <path d="M100 170 C110 150 130 140 100 130 C70 140 90 150 100 170Z" fill="#c9a84c" opacity="0.6"/>
-      <path d="M30 100 C50 90 60 70 70 100 C60 130 50 110 30 100Z" fill="#c9a84c" opacity="0.6"/>
-      <path d="M170 100 C150 90 140 70 130 100 C140 130 150 110 170 100Z" fill="#c9a84c" opacity="0.6"/>
-      <path d="M50 50 C60 65 75 68 70 80 C58 75 52 62 50 50Z" fill="#c9a84c" opacity="0.4"/>
-      <path d="M150 50 C140 65 125 68 130 80 C142 75 148 62 150 50Z" fill="#c9a84c" opacity="0.4"/>
-      <path d="M50 150 C60 135 75 132 70 120 C58 125 52 138 50 150Z" fill="#c9a84c" opacity="0.4"/>
-      <path d="M150 150 C140 135 125 132 130 120 C142 125 148 138 150 150Z" fill="#c9a84c" opacity="0.4"/>
-      <circle cx="100" cy="100" r="8" fill="#c9a84c" opacity="0.7"/>
-      <circle cx="100" cy="100" r="4" fill="#e8c97a"/>
-    </g>
-  </svg>
-
-  <div class="overlay-bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-  <div class="overlay-title">You're Invited</div>
-  <div class="overlay-sub">To a blessed union</div>
-  <div class="overlay-divider"></div>
-  <button id="openBtn" onclick="openInvitation()">Open Invitation</button>
-</div>
-
-<!-- ── MUSIC TOGGLE ── -->
-<button id="musicBtn" title="Toggle Music" style="display:none" onclick="toggleMusic()">
-  <span id="musicIcon">♪</span>
-</button>
-
-<!-- ════════════════════════════
-     MAIN CONTENT
-════════════════════════════ -->
-
-<!-- HERO -->
-<section id="hero">
-  <!-- Corner ornaments -->
-  <svg class="corner-ornament tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 5 Q5 50 50 50 Q5 50 5 95" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-    <path d="M5 5 Q50 5 50 50" stroke="#c9a84c" stroke-width="0.4" fill="none" stroke-dasharray="3 3"/>
-    <circle cx="5" cy="5" r="3" fill="#c9a84c"/>
-    <path d="M20 5 Q20 20 5 20" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
-    <path d="M35 5 Q35 35 5 35" stroke="#c9a84c" stroke-width="0.4" fill="none" opacity="0.5"/>
-  </svg>
-  <svg class="corner-ornament tr" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 5 Q5 50 50 50 Q5 50 5 95" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-    <path d="M5 5 Q50 5 50 50" stroke="#c9a84c" stroke-width="0.4" fill="none" stroke-dasharray="3 3"/>
-    <circle cx="5" cy="5" r="3" fill="#c9a84c"/>
-    <path d="M20 5 Q20 20 5 20" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
-    <path d="M35 5 Q35 35 5 35" stroke="#c9a84c" stroke-width="0.4" fill="none" opacity="0.5"/>
-  </svg>
-  <svg class="corner-ornament bl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 5 Q5 50 50 50 Q5 50 5 95" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-    <path d="M5 5 Q50 5 50 50" stroke="#c9a84c" stroke-width="0.4" fill="none" stroke-dasharray="3 3"/>
-    <circle cx="5" cy="5" r="3" fill="#c9a84c"/>
-    <path d="M20 5 Q20 20 5 20" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
-    <path d="M35 5 Q35 35 5 35" stroke="#c9a84c" stroke-width="0.4" fill="none" opacity="0.5"/>
-  </svg>
-  <svg class="corner-ornament br" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 5 Q5 50 50 50 Q5 50 5 95" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-    <path d="M5 5 Q50 5 50 50" stroke="#c9a84c" stroke-width="0.4" fill="none" stroke-dasharray="3 3"/>
-    <circle cx="5" cy="5" r="3" fill="#c9a84c"/>
-    <path d="M20 5 Q20 20 5 20" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
-    <path d="M35 5 Q35 35 5 35" stroke="#c9a84c" stroke-width="0.4" fill="none" opacity="0.5"/>
-  </svg>
-
-  <div style="position:relative; z-index:1; width:100%;">
-    <div class="hero-bismillah reveal">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-    <div class="hero-in-name reveal reveal-delay-1">In the Name of Allah, the Most Gracious, the Most Merciful</div>
-
-    <!-- Floral SVG -->
-    <div class="reveal reveal-delay-2">
-      <svg class="hero-floral float-anim" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Center motif -->
-        <g transform="translate(160,80)">
-          <circle r="18" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-          <circle r="10" fill="#c9a84c" opacity="0.25"/>
-          <circle r="5" fill="#c9a84c" opacity="0.6"/>
-          <!-- Petals -->
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.5" transform="rotate(0)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.4" transform="rotate(45)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.4" transform="rotate(90)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.4" transform="rotate(135)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.5" transform="rotate(180)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.4" transform="rotate(225)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.4" transform="rotate(270)"/>
-          <ellipse cx="0" cy="-30" rx="5" ry="14" fill="#c9a84c" opacity="0.4" transform="rotate(315)"/>
-        </g>
-        <!-- Left vine -->
-        <path d="M142 80 Q120 65 100 75 Q80 85 60 70 Q40 55 20 65" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <path d="M120 75 Q115 60 105 58" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
-        <path d="M90 80 Q85 92 78 95" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
-        <path d="M60 70 Q58 55 50 50" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
-        <circle cx="105" cy="58" r="4" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="78" cy="95" r="3" fill="#c9a84c" opacity="0.4"/>
-        <circle cx="50" cy="50" r="4" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="20" cy="65" r="5" fill="#c9a84c" opacity="0.4"/>
-        <!-- Right vine -->
-        <path d="M178 80 Q200 65 220 75 Q240 85 260 70 Q280 55 300 65" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <path d="M200 75 Q205 60 215 58" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
-        <path d="M230 80 Q235 92 242 95" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
-        <path d="M260 70 Q262 55 270 50" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
-        <circle cx="215" cy="58" r="4" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="242" cy="95" r="3" fill="#c9a84c" opacity="0.4"/>
-        <circle cx="270" cy="50" r="4" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="300" cy="65" r="5" fill="#c9a84c" opacity="0.4"/>
-        <!-- Small decorative dots -->
-        <circle cx="40" cy="100" r="2" fill="#c9a84c" opacity="0.3"/>
-        <circle cx="280" cy="100" r="2" fill="#c9a84c" opacity="0.3"/>
-        <circle cx="10" cy="80" r="1.5" fill="#c9a84c" opacity="0.3"/>
-        <circle cx="310" cy="80" r="1.5" fill="#c9a84c" opacity="0.3"/>
-      </svg>
-    </div>
-
-    <div class="hero-names reveal reveal-delay-2">
-      Seeni Sabrin Fathima
-      <span class="hero-amp">&amp;</span>
-      F. Syed Abu Thahir
-    </div>
-
-    <div class="gold-line reveal reveal-delay-3"></div>
-    <div class="hero-subtitle reveal reveal-delay-3">Join us in our blessed union</div>
-  </div>
-</section>
-
-<!-- FAMILY DETAILS -->
-<section id="family">
-  <div class="container">
-    <div class="section-label reveal">With the blessings of our families</div>
-    <h2 class="section-title reveal">The Families</h2>
-    <div class="gold-line reveal"></div>
-
-    <div class="family-grid">
-      <div class="family-card reveal reveal-delay-1">
-        <div class="family-role">The Bride</div>
-        <div class="family-name">Seeni Sabrin Fathima</div>
-        <div class="gold-line" style="width:40px; margin:0.8rem auto;"></div>
-        <div class="family-parents">
-          Daughter of<br>
-          <strong>Mr. Hassan Abdul Cader</strong><br>
-          &amp; <strong>Mrs. Farzana</strong>
-        </div>
-      </div>
-
-      <div class="family-card reveal reveal-delay-2">
-        <div class="family-role">The Groom</div>
-        <div class="family-name">F. Syed Abu Thahir</div>
-        <div class="gold-line" style="width:40px; margin:0.8rem auto;"></div>
-        <div class="family-parents">
-          Son of<br>
-          <strong>Mr. A. S. Feroz Khan</strong><br>
-          &amp; <strong>Mrs. S. Nazrath Begum</strong>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EVENT DETAILS -->
-<section id="events">
-  <div class="container">
-    <div class="section-label reveal">Mark your calendars</div>
-    <h2 class="section-title reveal">The Celebration</h2>
-    <div class="gold-line reveal"></div>
-
-    <div class="events-date-block reveal reveal-delay-1">
-      <div class="events-date">Sunday, 17th May 2026</div>
-      <div class="events-hijri">30 Dhul Qa'dah 1447 AH</div>
-    </div>
-
-    <div class="events-grid">
-      <div class="event-card reveal reveal-delay-2">
-        <span class="event-icon">🕌</span>
-        <div class="event-type">Nikah</div>
-        <div class="gold-line" style="width:30px; margin:0.6rem auto;"></div>
-        <div class="event-time">11:00 AM – 12:00 PM</div>
-      </div>
-
-      <div class="event-card reveal reveal-delay-3">
-        <span class="event-icon">✨</span>
-        <div class="event-type">Walimah</div>
-        <div class="gold-line" style="width:30px; margin:0.6rem auto;"></div>
-        <div class="event-time">12:00 PM Onwards</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LOCATION -->
-<section id="location">
-  <div class="container" style="text-align:center;">
-    <div class="section-label reveal">Find your way to us</div>
-    <h2 class="section-title reveal">Venue</h2>
-    <div class="gold-line reveal"></div>
-
-    <div class="location-name reveal reveal-delay-1">Thahir Bungalow, Keelakarai</div>
-
-    <div class="map-wrapper reveal reveal-delay-2">
-      <iframe
-        src="https://maps.google.com/maps?q=Keelakarai,+Tamil+Nadu&t=&z=14&ie=UTF8&iwloc=&output=embed"
-        width="100%"
-        height="320"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Thahir Bungalow, Keelakarai">
-      </iframe>
-    </div>
-
-    <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="location-btn reveal reveal-delay-3">
-      <span>📍</span> Open in Google Maps
-    </a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="section-label reveal">Reach us</div>
-    <h2 class="section-title reveal">Contact</h2>
-    <div class="gold-line reveal"></div>
-
-    <div class="contact-grid">
-      <div class="contact-card reveal reveal-delay-1">
-        <div class="contact-number">98409 50555</div>
-      </div>
-      <div class="contact-card reveal reveal-delay-2">
-        <div class="contact-number">98409 28566</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RSVP -->
-<section id="rsvp">
-  <div class="container">
-    <div class="section-label reveal">We'd love to know</div>
-    <h2 class="section-title reveal">RSVP</h2>
-    <div class="gold-line reveal"></div>
-    <p class="reveal" style="font-size:0.82rem; color:var(--text-muted); margin-top:1rem;">Will you be joining us on this special day?</p>
-
-    <div class="rsvp-form reveal reveal-delay-1">
-      <input type="text" id="rsvpName" class="rsvp-input" placeholder="Your Name">
-      <div class="rsvp-buttons">
-        <button class="rsvp-btn attend" onclick="submitRSVP('attend')">✓ Will Attend</button>
-        <button class="rsvp-btn" onclick="submitRSVP('decline')">✗ Cannot Attend</button>
-      </div>
-      <div class="rsvp-message" id="rsvpMsg"></div>
-    </div>
-  </div>
-</section>
-
-<!-- WISHES / GIFT -->
-<section id="wishes">
-  <div class="container">
-    <div class="section-label reveal">Your love and prayers are the greatest gift</div>
-    <h2 class="section-title reveal">Send Your Wishes</h2>
-    <div class="gold-line reveal"></div>
-
-    <div class="wishes-card reveal reveal-delay-1">
-      <div class="wishes-label">Bank Transfer</div>
-      <div class="wishes-detail" id="bankDetail">Account: XXXX XXXX XXXX 1234</div>
-      <div class="wishes-label" style="margin-top:1.2rem;">UPI</div>
-      <div class="wishes-detail" id="upiDetail">UPI: example@upi</div>
-      <button class="copy-btn" onclick="copyDetails()">Copy Details</button>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <!-- Floral divider -->
-  <svg viewBox="0 0 400 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:min(400px,80vw); margin:0 auto 2.5rem; display:block; opacity:0.5;">
-    <line x1="0" y1="20" x2="165" y2="20" stroke="#c9a84c" stroke-width="0.5"/>
-    <g transform="translate(200,20)">
-      <ellipse cx="0" cy="-12" rx="4" ry="10" fill="#c9a84c" opacity="0.7" transform="rotate(0)"/>
-      <ellipse cx="0" cy="-12" rx="4" ry="10" fill="#c9a84c" opacity="0.6" transform="rotate(60)"/>
-      <ellipse cx="0" cy="-12" rx="4" ry="10" fill="#c9a84c" opacity="0.6" transform="rotate(120)"/>
-      <ellipse cx="0" cy="-12" rx="4" ry="10" fill="#c9a84c" opacity="0.7" transform="rotate(180)"/>
-      <ellipse cx="0" cy="-12" rx="4" ry="10" fill="#c9a84c" opacity="0.6" transform="rotate(240)"/>
-      <ellipse cx="0" cy="-12" rx="4" ry="10" fill="#c9a84c" opacity="0.6" transform="rotate(300)"/>
-      <circle r="5" fill="#c9a84c" opacity="0.8"/>
-    </g>
-    <line x1="235" y1="20" x2="400" y2="20" stroke="#c9a84c" stroke-width="0.5"/>
-  </svg>
-
-  <div class="footer-dua">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>
-  <div class="footer-dua-en">"May Allah bless this union with love, barakah, and mercy — and unite them always in all that is good."</div>
-
-  <div class="footer-names">Sabrin Fathima ✦ Abu Thahir — 17 May 2026</div>
-  <div class="footer-copy" style="margin-top:0.5rem;">With love &amp; du'a</div>
-</footer>
-
-<script>
-  // ── OPEN INVITATION ──
-  function openInvitation() {
-    const overlay = document.getElementById('overlay');
-    overlay.classList.add('hidden');
-    document.getElementById('musicBtn').style.display = 'flex';
-    // Start music
-    const music = document.getElementById('bgMusic');
-    music.volume = 0.35;
-    music.play().catch(() => {});
-    isMusicPlaying = true;
-    document.getElementById('musicIcon').textContent = '♪';
-    // Trigger scroll reveal for hero
-    setTimeout(triggerReveal, 200);
-  }
-
-  // ── MUSIC ──
-  let isMusicPlaying = true;
-
-  function toggleMusic() {
-    const music = document.getElementById('bgMusic');
-    const icon = document.getElementById('musicIcon');
-    if (isMusicPlaying) {
-      music.pause();
-      icon.textContent = '♩';
-      isMusicPlaying = false;
-    } else {
-      music.play().catch(() => {});
-      icon.textContent = '♪';
-      isMusicPlaying = true;
-    }
-  }
-
-  // ── SCROLL REVEAL ──
-  function triggerReveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeni Sabrin Fathima & F. Syed Abu Thahir - Wedding Invitation</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-secondary: #F3E5AB;
+            --gold-dark: #AA8322;
+            --bg-dark: #121212;
+            --bg-card: #1E1E1E;
         }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
-  }
 
-  // ── RSVP ──
-  function submitRSVP(type) {
-    const name = document.getElementById('rsvpName').value.trim();
-    const msg = document.getElementById('rsvpMsg');
-    if (!name) {
-      msg.textContent = 'Please enter your name first.';
-      msg.classList.add('show');
-      return;
-    }
-    if (type === 'attend') {
-      msg.innerHTML = `✦ JazakAllah Khairan, <em>${name}</em>! We're delighted you'll join us. May Allah bless your journey. ✦`;
-    } else {
-      msg.innerHTML = `✦ We understand, <em>${name}</em>. Your du'as and blessings mean the world to us. ✦`;
-    }
-    msg.classList.add('show');
-  }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: #E5E7EB;
+            overflow-x: hidden;
+        }
 
-  // ── COPY DETAILS ──
-  function copyDetails() {
-    const text = document.getElementById('bankDetail').textContent + '\n' + document.getElementById('upiDetail').textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      const btn = document.querySelector('.copy-btn');
-      const orig = btn.textContent;
-      btn.textContent = '✓ Copied!';
-      setTimeout(() => btn.textContent = orig, 2000);
-    }).catch(() => {
-      alert('Please copy manually:\n' + text);
-    });
-  }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
 
-  // Countdown effect for overlay entrance
-  window.addEventListener('DOMContentLoaded', () => {
-    // subtle particle-like stars in hero
-    createStars();
-  });
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
 
-  function createStars() {
-    const hero = document.getElementById('hero');
-    for (let i = 0; i < 18; i++) {
-      const star = document.createElement('div');
-      const size = Math.random() * 2 + 0.5;
-      star.style.cssText = `
-        position:absolute;
-        width:${size}px; height:${size}px;
-        background:#c9a84c;
-        border-radius:50%;
-        top:${Math.random() * 100}%;
-        left:${Math.random() * 100}%;
-        opacity:${Math.random() * 0.3 + 0.05};
-        pointer-events:none;
-        animation: float ${3 + Math.random() * 4}s ease-in-out ${Math.random() * 3}s infinite;
-      `;
-      hero.appendChild(star);
-    }
-  }
-</script>
+        /* Luxury Gold Text Gradient */
+        .text-gold {
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8322 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold Border Gradient */
+        .border-gold {
+            border-image: linear-gradient(135deg, #D4AF37, #AA8322, #F3E5AB) 1;
+        }
+
+        /* Premium Textures and Overlays */
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
+        }
+
+        /* Islamic Geometric Silhouette */
+        .islamic-arch {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 0 100%, 0 25%);
+        }
+
+        /* Custom glow effects */
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .glow-gold-hover:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            transition: all 0.5s ease;
+        }
+
+        /* Smooth reveal animations on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Opening Curtain Effect */
+        #opening-overlay {
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .slide-up {
+            transform: translateY(-100%);
+        }
+
+        /* Custom corner decorations and dividers */
+        .corner-top-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-top: 2px solid var(--gold-primary);
+            border-left: 2px solid var(--gold-primary);
+        }
+
+        .corner-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-bottom: 2px solid var(--gold-primary);
+            border-right: 2px solid var(--gold-primary);
+        }
+
+        /* Pulse animations for elegant aesthetics */
+        @keyframes subtle-pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .gold-pulse {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+
+        /* Blur for luxury backdrop */
+        .glass-card {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+            border-radius: 3px;
+        }
+
+        /* Floating music toggle animation */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-slow {
+            animation: spin-slow 8s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-pattern antialiased select-none">
+
+    <!-- BACKGROUND AUDIO -->
+    <audio id="bgMusic" loop>
+        <!-- A soft instrumental royalty-free track as a reliable fallback for nasheed -->
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+        <!-- Main nasheed track -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- MANDATORY OPENING SCREEN OVERLAY -->
+    <div id="opening-overlay" class="fixed inset-0 z-50 bg-[#121212] flex flex-col items-center justify-center text-center p-6 bg-pattern">
+        <!-- Artistic Border -->
+        <div class="absolute inset-12 border border-amber-700/30 pointer-events-none"></div>
+        <div class="absolute inset-8 border border-amber-600/10 pointer-events-none"></div>
+        
+        <div class="mb-8 z-10">
+            <i class="fa-solid fa-kaaba text-4xl text-gold mb-4 opacity-70"></i>
+            <h3 class="font-serif text-lg tracking-[0.2em] text-gray-400 mb-2 uppercase">Bismillah-ir-Rahman-ir-Rahim</h3>
+            <h1 class="font-serif text-4xl md:text-5xl text-gold mb-2">You're Invited</h1>
+            <p class="text-gray-300 font-light max-w-sm tracking-wide">To the blessed union of Sabrin & Syed Thahir</p>
+        </div>
+
+        <button id="openInvitationBtn" class="z-10 px-8 py-3 glass-card text-gold font-medium tracking-[0.2em] rounded-full uppercase text-sm border-gold glow-gold-hover transition-all duration-300 transform hover:scale-105 cursor-pointer">
+            Open Invitation
+        </button>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
+
+        <!-- FLOATING MUSIC BUTTON -->
+        <div class="fixed bottom-6 right-6 z-40">
+            <button id="musicToggle" class="w-12 h-12 glass-card rounded-full flex items-center justify-center text-gold border-gold glow-gold cursor-pointer transition-all duration-300 hover:scale-110">
+                <i id="musicIcon" class="fa-solid fa-music text-lg spin-slow"></i>
+            </button>
+        </div>
+
+        <!-- 1. HERO SECTION -->
+        <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-[url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80')] bg-cover bg-center bg-fixed">
+            <!-- Dark Tint Overlay -->
+            <div class="absolute inset-0 bg-black/85"></div>
+            
+            <!-- Floral/Geometric Silhouette Container -->
+            <div class="relative z-10 max-w-3xl w-full p-8 glass-card rounded-3xl border-gold reveal active">
+                
+                <div class="mb-6">
+                    <span class="font-serif text-lg tracking-[0.3em] text-gold uppercase opacity-90">Bismillah-ir-Rahman-ir-Rahim</span>
+                </div>
+                
+                <h3 class="font-serif text-xl md:text-2xl text-gray-300 mb-8 tracking-wide italic">In the name of Allah, the Most Gracious, the Most Merciful</h3>
+
+                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-gold mb-4 leading-tight">
+                    Seeni Sabrin Fathima
+                </h1>
+                
+                <div class="flex items-center justify-center my-4">
+                    <div class="h-[1px] w-12 bg-amber-600/50"></div>
+                    <span class="font-script text-5xl md:text-6xl text-gold mx-6">&</span>
+                    <div class="h-[1px] w-12 bg-amber-600/50"></div>
+                </div>
+
+                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-gold mb-8 leading-tight">
+                    F. Syed Abu Thahir
+                </h1>
+
+                <p class="font-light text-lg tracking-[0.1em] text-gray-200 mt-6 max-w-md mx-auto">
+                    Join us in our blessed union as we begin our journey together in love and faith.
+                </p>
+
+                <div class="mt-8">
+                    <div class="text-sm tracking-[0.3em] text-gold uppercase mb-2">Save The Date</div>
+                    <div class="font-serif text-2xl text-white">May 17, 2026</div>
+                </div>
+                
+                <div class="mt-12 flex justify-center">
+                    <i class="fa-solid fa-chevron-down text-gold text-2xl animate-bounce"></i>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 2. FAMILY DETAILS SECTION -->
+        <section class="relative py-20 px-6 bg-[#181818] border-t border-b border-amber-900/20">
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 text-center relative z-10">
+                
+                <!-- Bride's Family -->
+                <div class="glass-card p-10 rounded-2xl border-gold reveal relative">
+                    <div class="corner-top-left"></div>
+                    <div class="corner-bottom-right"></div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-venus text-gold text-3xl opacity-80"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl text-gold mb-2">The Bride</h3>
+                    <h2 class="font-serif text-3xl text-white mb-4">Seeni Sabrin Fathima</h2>
+                    <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                    <p class="text-gray-400 text-sm tracking-wider uppercase mb-2">Daughter of</p>
+                    <p class="text-white text-lg font-medium">Mr. Hassan Abdul Cader</p>
+                    <p class="text-white text-lg font-medium">&</p>
+                    <p class="text-white text-lg font-medium">Mrs. Farzana</p>
+                </div>
+
+                <!-- Groom's Family -->
+                <div class="glass-card p-10 rounded-2xl border-gold reveal relative">
+                    <div class="corner-top-left"></div>
+                    <div class="corner-bottom-right"></div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-mars text-gold text-3xl opacity-80"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl text-gold mb-2">The Groom</h3>
+                    <h2 class="font-serif text-3xl text-white mb-4">F. Syed Abu Thahir</h2>
+                    <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                    <p class="text-gray-400 text-sm tracking-wider uppercase mb-2">Son of</p>
+                    <p class="text-white text-lg font-medium">Mr. A. S. Feroz Khan</p>
+                    <p class="text-white text-lg font-medium">&</p>
+                    <p class="text-white text-lg font-medium">Mrs. S. Nazrath Begum</p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 3. EVENT DETAILS SECTION -->
+        <section class="relative py-20 px-6 bg-[#121212] bg-pattern">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-4xl text-gold mb-4 reveal">Wedding Events</h2>
+                <p class="text-gray-400 mb-12 tracking-wider reveal">Insha'Allah, the celebration will take place on</p>
+
+                <div class="mb-12 glass-card inline-block py-6 px-12 rounded-xl border border-gold/50 reveal">
+                    <h3 class="font-serif text-2xl text-white mb-2">Sunday, May 17, 2026</h3>
+                    <p class="text-gold tracking-widest text-sm uppercase">30 Dhul Qa’dah 1447 AH</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mt-4">
+                    <!-- Nikah -->
+                    <div class="glass-card p-8 rounded-2xl border-gold group hover:scale-105 transition-all duration-500 reveal">
+                        <div class="mb-4 inline-block p-4 rounded-full border border-amber-600/30 group-hover:border-amber-500 transition-colors">
+                            <i class="fa-solid fa-ring text-gold text-3xl"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl text-white mb-4">Nikah</h3>
+                        <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                        <p class="text-gray-400 mb-2">Timing</p>
+                        <p class="text-xl text-white font-semibold">11:00 AM – 12:00 PM</p>
+                    </div>
+
+                    <!-- Walimah -->
+                    <div class="glass-card p-8 rounded-2xl border-gold group hover:scale-105 transition-all duration-500 reveal">
+                        <div class="mb-4 inline-block p-4 rounded-full border border-amber-600/30 group-hover:border-amber-500 transition-colors">
+                            <i class="fa-solid fa-utensils text-gold text-3xl"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl text-white mb-4">Walimah</h3>
+                        <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
+                        <p class="text-gray-400 mb-2">Timing</p>
+                        <p class="text-xl text-white font-semibold">12:00 PM onwards</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 4. LOCATION SECTION -->
+        <section class="relative py-20 px-6 bg-[#181818]">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-4xl text-gold mb-4 reveal">The Venue</h2>
+                <p class="text-white text-xl mb-8 font-light reveal">Thahir Bungalow, Keelakarai</p>
+
+                <div class="rounded-2xl overflow-hidden glass-card h-80 w-full mb-8 border border-amber-600/20 glow-gold reveal">
+                    <!-- Standard Google Maps Embed. Since real embed links are URL-specific, using a clean placeholder iframe or precise coordinates if known -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.670692735163!2d78.77708577583689!3d9.228186485854747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0185994270d4d1%3A0xe543fa02bc56041c!2sKilakarai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709400000000!5m2!1sen!2sin" 
+                        class="w-full h-full border-0 grayscale opacity-80" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="inline-flex items-center px-8 py-3 glass-card text-gold font-medium rounded-full uppercase tracking-wider text-sm border-gold glow-gold-hover transition-all duration-300 transform hover:scale-105 reveal">
+                    <i class="fa-solid fa-map-location-dot mr-2"></i> Open in Google Maps
+                </a>
+            </div>
+        </section>
+
+
+        <!-- 5. CONTACT SECTION -->
+        <section class="relative py-16 px-6 bg-[#121212] border-t border-amber-900/20">
+            <div class="max-w-md mx-auto text-center glass-card p-8 rounded-2xl border border-gold/40 reveal">
+                <h3 class="font-serif text-2xl text-gold mb-6">Contact & Enquiries</h3>
+                
+                <div class="flex flex-col space-y-4">
+                    <a href="tel:9840950555" class="flex items-center justify-center space-x-3 text-white hover:text-gold transition-colors">
+                        <i class="fa-solid fa-phone text-gold"></i>
+                        <span class="text-lg">98409 50555</span>
+                    </a>
+                    <a href="tel:9840928566" class="flex items-center justify-center space-x-3 text-white hover:text-gold transition-colors">
+                        <i class="fa-solid fa-phone text-gold"></i>
+                        <span class="text-lg">98409 28566</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 6. RSVP SECTION -->
+        <section class="relative py-20 px-6 bg-[#181818] bg-pattern">
+            <div class="max-w-lg mx-auto glass-card p-10 rounded-2xl border-gold reveal">
+                <h2 class="font-serif text-3xl text-gold text-center mb-4">R.S.V.P</h2>
+                <p class="text-center text-gray-400 mb-8">Please let us know your presence</p>
+
+                <form id="rsvpForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-2 font-medium tracking-wide">Full Name</label>
+                        <input type="text" id="rsvp_name" required class="w-full bg-[#121212] border border-amber-600/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold transition-colors" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button type="button" onclick="handleRSVP('Will Attend')" class="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                            Will Attend
+                        </button>
+                        <button type="button" onclick="handleRSVP('Cannot Attend')" class="w-full py-3 border border-gray-600 text-gray-300 hover:text-white hover:border-white font-medium rounded-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                            Cannot Attend
+                        </button>
+                    </div>
+                </form>
+
+                <div id="rsvp-status" class="hidden mt-6 text-center text-gold font-medium p-4 border border-gold/30 rounded-lg glass-card animate-pulse">
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 7. WISH / GIFT SECTION -->
+        <section class="relative py-20 px-6 bg-[#121212]">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="font-serif text-4xl text-gold mb-4 reveal">Send Your Wishes</h2>
+                <p class="text-gray-400 mb-12 max-w-lg mx-auto reveal">Your prayers and blessings are the greatest gifts for us. If you wish to send a gift, you may use the details below.</p>
+
+                <div class="grid md:grid-cols-2 gap-8 reveal">
+                    <!-- Bank Transfer Details -->
+                    <div class="glass-card p-8 rounded-2xl border-gold text-left h-full flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-serif text-xl text-white mb-4"><i class="fa-solid fa-building-columns text-gold mr-2"></i> Bank Transfer</h3>
+                            <p class="text-gray-400 text-sm mb-1">Account Holder</p>
+                            <p class="text-white font-medium mb-3">F. Syed Abu Thahir</p>
+                            
+                            <p class="text-gray-400 text-sm mb-1">Account Number</p>
+                            <p id="accNumber" class="text-white font-medium mb-3">123456789012</p>
+                            
+                            <p class="text-gray-400 text-sm mb-1">IFSC Code</p>
+                            <p id="ifscCode" class="text-white font-medium">SBIN0012345</p>
+                        </div>
+                        <button onclick="copyToClipboard('accNumber', 'Account Number')" class="mt-6 w-full py-2.5 glass-card text-gold rounded-lg text-sm border-gold hover:bg-gold hover:text-black transition-all duration-300 font-medium cursor-pointer">
+                            Copy Account Details
+                        </button>
+                    </div>
+
+                    <!-- UPI Details -->
+                    <div class="glass-card p-8 rounded-2xl border-gold text-left h-full flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-serif text-xl text-white mb-4"><i class="fa-solid fa-mobile-screen text-gold mr-2"></i> UPI Address</h3>
+                            <p class="text-gray-400 text-sm mb-1">Name</p>
+                            <p class="text-white font-medium mb-3">Syed Abu Thahir</p>
+                            
+                            <p class="text-gray-400 text-sm mb-1">UPI ID</p>
+                            <p id="upiId" class="text-white font-medium text-lg">syed.ibrahim.thahir@fam</p>
+                        </div>
+                        <button onclick="copyToClipboard('upiId', 'UPI ID')" class="mt-6 w-full py-2.5 glass-card text-gold rounded-lg text-sm border-gold hover:bg-gold hover:text-black transition-all duration-300 font-medium cursor-pointer">
+                            Copy UPI ID
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="copy-toast" class="fixed top-12 left-1/2 transform -translate-x-1/2 glass-card border-gold text-gold font-medium text-sm py-3 px-8 rounded-full shadow-2xl tracking-wide opacity-0 transition-opacity duration-300 z-50 pointer-events-none">
+                    Copied to clipboard!
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 8. FOOTER -->
+        <footer class="relative py-16 px-6 bg-[#0a0a0a] text-center border-t border-amber-900/40">
+            <div class="max-w-2xl mx-auto">
+                <i class="fa-solid fa-heart text-gold text-2xl mb-4 gold-pulse"></i>
+                <h2 class="font-serif text-2xl md:text-3xl text-gold mb-4">May Allah bless this union with love and barakah.</h2>
+                <p class="text-gray-500 font-light text-sm tracking-widest uppercase mb-8">Barakallahu lakum wa baraka 'alaykum wa jama'a baynakuma fi khayr</p>
+                <div class="h-[1px] w-32 bg-amber-600/30 mx-auto mb-8"></div>
+                <p class="text-gray-600 text-xs tracking-wide">&copy; 2026 Seeni Sabrin Fathima & F. Syed Abu Thahir. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Opening Invitation Controller
+        const openingOverlay = document.getElementById('opening-overlay');
+        const mainContent = document.getElementById('main-content');
+        const openInvitationBtn = document.getElementById('openInvitationBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+
+        let isMusicPlaying = false;
+
+        openInvitationBtn.addEventListener('click', () => {
+            // Dismiss Overlay
+            openingOverlay.classList.add('slide-up');
+            
+            // Show main content
+            mainContent.classList.remove('opacity-0');
+            
+            // Allow interactions
+            document.body.classList.remove('select-none');
+
+            // Autoplay music
+            bgMusic.play().then(() => {
+                isMusicPlaying = true;
+                musicIcon.classList.add('spin-slow');
+                musicIcon.classList.remove('fa-volume-xmark');
+                musicIcon.classList.add('fa-music');
+            }).catch(error => {
+                console.log("Music play blocked or failed: ", error);
+            });
+
+            // Start reveal logic
+            handleScrollReveal();
+        });
+
+        // Music Toggle Control
+        musicToggle.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicIcon.classList.remove('spin-slow');
+                musicIcon.classList.remove('fa-music');
+                musicIcon.classList.add('fa-volume-xmark');
+            } else {
+                bgMusic.play();
+                isMusicPlaying = true;
+                musicIcon.classList.add('spin-slow');
+                musicIcon.classList.remove('fa-volume-xmark');
+                musicIcon.classList.add('fa-music');
+            }
+        });
+
+        // RSVP Handler
+        function handleRSVP(status) {
+            const nameInput = document.getElementById('rsvp_name');
+            const statusBox = document.getElementById('rsvp-status');
+
+            if (!nameInput.value.trim()) {
+                alert("Please enter your name.");
+                return;
+            }
+
+            // Hide form inputs for a moment or simulate sending
+            statusBox.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Thank you, ${nameInput.value.trim()}! Your response "${status}" has been saved.`;
+            statusBox.classList.remove('hidden');
+
+            nameInput.value = ''; // clear input
+        }
+
+        // Copy to clipboard utility
+        function copyToClipboard(elementId, label) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const toast = document.getElementById('copy-toast');
+                toast.innerText = `${label} copied successfully!`;
+                toast.classList.remove('opacity-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        // Scroll Reveal Utility
+        function handleScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        }
+
+        // Run scroll reveal setup on dom load
+        document.addEventListener("DOMContentLoaded", function() {
+            // Keep body non-interactive during overlay
+            document.body.classList.add('select-none');
+        });
+    </script>
 </body>
 </html>
