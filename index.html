@@ -1315,10 +1315,17 @@ function startCountdown() {
 }
 
 // ── RSVP
+const RSVP_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz4rs7RlGuDP8qiN1xHd0VlRc_nPXmGOjE83IzpL_Xvb-yR-zXoiVb6ez1C9ayj9Y7l/exec';
 function doRSVP(type) {
   const name = document.getElementById('rsvpName').value.trim();
   const el = document.getElementById('rsvpResp');
   if (!name) { el.textContent = 'Please enter your name first.'; el.classList.add('show'); return; }
+  fetch(RSVP_SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, attending: type === 'yes' ? 'Yes' : 'No' })
+  });
   el.innerHTML = type === 'yes'
     ? `✦ JazakAllah Khairan, <em>${name}</em>! We are overjoyed you'll be with us. May Allah ease your journey. ✦`
     : `✦ We understand, <em>${name}</em>. Your du'as and blessings from afar mean the world to us. ✦`;
