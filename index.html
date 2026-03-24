@@ -108,6 +108,42 @@ body {
 #openBtn:hover { box-shadow: 0 0 40px rgba(201,168,76,0.32); color: #fff; }
 #openBtn:hover::before { transform: scaleX(1); }
 
+/* ── MAGIC WAND OVERLAY ── */
+#wandOverlay {
+  position: fixed; inset: 0; z-index: 1100;
+  pointer-events: none; display: none;
+  overflow: hidden;
+}
+#wandOverlay.active { display: block; }
+.wand-el {
+  position: absolute;
+  width: 38px; height: 38px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+.wand-el svg { width: 100%; height: 100%; }
+.sparkle-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, #fff 0%, #e2c97e 40%, rgba(201,168,76,0) 70%);
+  animation: sparkFade var(--dur, 0.9s) ease forwards;
+}
+@keyframes sparkFade {
+  0%   { opacity: 1; transform: translate(0,0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx,0px), var(--ty,-18px)) scale(0); }
+}
+.reveal-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(201,168,76,0.12) 0%, transparent 70%);
+  opacity: 0; animation: glowPulse 1.4s ease forwards;
+}
+@keyframes glowPulse {
+  0%   { opacity: 0; }
+  40%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* ── NAV DOCK ── */
 #nav-dock {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
@@ -244,7 +280,7 @@ section + section { border-top: 1px solid rgba(201,168,76,0.07); }
   text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem;
 }
 
-/* FAMILY */
+/* FAMILY — increased font sizes */
 #family { min-height: auto; }
 .family-subtitle {
   text-align: center; font-size: 0.77rem;
@@ -264,11 +300,14 @@ section + section { border-top: 1px solid rgba(201,168,76,0.07); }
   font-size: 0.58rem; letter-spacing: 0.42em; text-transform: uppercase;
   color: var(--gold-dim); margin-bottom: 0.9rem;
 }
+/* TASK 1: Increased family person name font sizes */
 .family-person {
-  font-family: 'Playfair Display', serif; font-size: clamp(0.92rem, 2.5vw, 1.12rem);
-  color: var(--text-white); font-weight: 400; line-height: 1.5; margin-bottom: 0.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.18rem, 3.5vw, 1.52rem);
+  color: var(--text-white); font-weight: 500; line-height: 1.5; margin-bottom: 0.5rem;
 }
-.family-parent { font-size: 0.74rem; color: var(--text-muted); line-height: 1.95; }
+/* TASK 1: Slightly increased parent name font sizes */
+.family-parent { font-size: clamp(0.82rem, 2.2vw, 0.92rem); color: var(--text-muted); line-height: 1.95; }
 .family-parent strong { color: var(--text-cream); font-weight: 400; }
 .fam-divider {
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -330,13 +369,17 @@ section + section { border-top: 1px solid rgba(201,168,76,0.07); }
   color: var(--gold-light); margin-bottom: 0.6rem;
 }
 .ev-card-time { font-size: 0.73rem; color: var(--text-muted); letter-spacing: 0.1em; }
+/* Calendar buttons row */
+.cal-btns-row {
+  display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-top: 2rem;
+}
 .cal-btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.75rem 1.8rem; border: 1px solid var(--gold);
   color: var(--gold-light); text-decoration: none;
   font-family: 'Poppins', sans-serif; font-size: 0.7rem;
   letter-spacing: 0.28em; text-transform: uppercase; border-radius: 2px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; cursor: pointer; background: transparent;
 }
 .cal-btn:hover { background: rgba(201,168,76,0.12); box-shadow: 0 0 22px rgba(201,168,76,0.22); color: #fff; }
 
@@ -466,14 +509,25 @@ footer {
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: #0a0805; }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+/* YouTube hidden player */
+#ytPlayer {
+  position: fixed; top: -9999px; left: -9999px;
+  width: 1px; height: 1px; pointer-events: none; opacity: 0;
+}
 </style>
 </head>
 <body>
 
 <div class="bg-texture"></div>
-<audio id="bgMusic" loop preload="none">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-</audio>
+
+<!-- YouTube hidden audio player -->
+<div id="ytPlayer"></div>
+
+<!-- Magic Wand Overlay -->
+<div id="wandOverlay">
+  <div class="reveal-glow"></div>
+</div>
 
 <!-- ════════ OPENING ════════ -->
 <div id="opening">
@@ -646,10 +700,14 @@ footer {
           <div class="ev-card-time">12:00 PM Onwards</div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;margin-top:2rem;" class="reveal rd4">
-        <a class="cal-btn" href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Nikah+%26+Walimah+Abu+Thahir+%26+Sabrin&dates=20260517T053000/20260517T120000&details=Thahir+Bungalow,+Keelakarai&location=Keelakarai,+Tamil+Nadu&sf=true&output=xml" target="_blank">
+      <!-- TASK 2 & 3: Fixed Google Calendar time + Added Apple Calendar button -->
+      <div class="cal-btns-row reveal rd4">
+        <a class="cal-btn" href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Nikah+%26+Walimah+Abu+Thahir+%26+Sabrin&dates=20260517T110000/20260517T130000&details=Thahir+Bungalow,+Keelakarai&location=Keelakarai,+Tamil+Nadu&sf=true&output=xml" target="_blank">
           📅 Add to Google Calendar
         </a>
+        <button class="cal-btn" onclick="downloadICS()">
+          🍎 Add to Apple Calendar
+        </button>
       </div>
     </div>
   </section>
@@ -669,8 +727,9 @@ footer {
           width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade" title="Keelakarai Map"></iframe>
       </div>
+      <!-- TASK 4: Updated Google Maps link -->
       <div style="display:flex;justify-content:center;" class="reveal rd3">
-        <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="cal-btn">📍 Open in Google Maps</a>
+        <a href="https://maps.app.goo.gl/YyvW5GaJ5qGx58nAA" target="_blank" class="cal-btn">📍 Open in Google Maps</a>
       </div>
     </div>
   </section>
@@ -766,28 +825,228 @@ footer {
 </div><!-- /main-wrapper -->
 
 <script>
-// ── OPEN INVITATION
+// ══════════════════════════════════════════
+// TASK 6: YouTube Nasheed Audio via IFrame API
+// ══════════════════════════════════════════
+var ytPlayer = null;
+var ytReady = false;
+var isMusicOn = false;
+var ytStartRequested = false;
+
+// Load YouTube IFrame API
+(function() {
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('ytPlayer', {
+    height: '1',
+    width: '1',
+    videoId: 'mHpTdsBbYRM',
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      disablekb: 1,
+      loop: 1,
+      playlist: 'mHpTdsBbYRM',
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+      fs: 0,
+      iv_load_policy: 3
+    },
+    events: {
+      onReady: function(e) {
+        ytReady = true;
+        e.target.setVolume(25);
+        if (ytStartRequested) {
+          e.target.playVideo();
+          isMusicOn = true;
+        }
+      },
+      onStateChange: function(e) {
+        // Keep looping
+        if (e.data === YT.PlayerState.ENDED) {
+          e.target.playVideo();
+        }
+      }
+    }
+  });
+}
+
+function toggleMusic() {
+  const btn = document.getElementById('musicBtn');
+  if (!ytPlayer || !ytReady) return;
+  if (isMusicOn) {
+    ytPlayer.pauseVideo();
+    btn.classList.add('muted');
+    isMusicOn = false;
+  } else {
+    ytPlayer.playVideo();
+    btn.classList.remove('muted');
+    isMusicOn = true;
+  }
+}
+
+// ══════════════════════════════════════════
+// TASK 5: Magic Wand Opening Animation
+// ══════════════════════════════════════════
+function runMagicWand(callback) {
+  const overlay = document.getElementById('wandOverlay');
+  overlay.classList.add('active');
+
+  // Create wand element
+  const wand = document.createElement('div');
+  wand.className = 'wand-el';
+  wand.innerHTML = `
+    <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- wand stick -->
+      <line x1="8" y1="30" x2="26" y2="12" stroke="#c9a84c" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- star tip -->
+      <polygon points="26,4 27.5,9 32,9 28.5,12 30,17 26,14 22,17 23.5,12 20,9 24.5,9"
+        fill="#e2c97e" opacity="0.92"/>
+      <!-- glow ring -->
+      <circle cx="26" cy="10" r="6" fill="none" stroke="#c9a84c" stroke-width="0.6" opacity="0.5"/>
+    </svg>`;
+  overlay.appendChild(wand);
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const startX = -30, startY = vh * 0.55;
+  const endX = vw + 30, endY = vh * 0.3;
+  const duration = 1300;
+  const start = performance.now();
+  let lastSparkTime = 0;
+
+  function spawnSparkle(x, y) {
+    const s = document.createElement('div');
+    s.className = 'sparkle-particle';
+    const size = 4 + Math.random() * 8;
+    const tx = (Math.random() - 0.5) * 40;
+    const ty = -12 - Math.random() * 22;
+    const dur = 0.6 + Math.random() * 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${x - size/2}px; top:${y - size/2}px;
+      --tx:${tx}px; --ty:${ty}px; --dur:${dur}s;
+    `;
+    overlay.appendChild(s);
+    setTimeout(() => s.remove(), dur * 1000);
+  }
+
+  function spawnBurst(x, y, count) {
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const angle = (Math.random() * Math.PI * 2);
+        const dist = 15 + Math.random() * 30;
+        spawnSparkle(
+          x + Math.cos(angle) * dist * 0.3,
+          y + Math.sin(angle) * dist * 0.3
+        );
+      }, i * 22);
+    }
+  }
+
+  function animate(now) {
+    const elapsed = now - start;
+    const t = Math.min(elapsed / duration, 1);
+    // Ease in-out cubic
+    const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+
+    const cx = startX + (endX - startX) * ease;
+    const cy = startY + (endY - startY) * ease;
+
+    wand.style.left = cx + 'px';
+    wand.style.top  = cy + 'px';
+
+    // Spawn sparkles along trail
+    if (now - lastSparkTime > 28) {
+      spawnSparkle(cx, cy);
+      lastSparkTime = now;
+    }
+
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Final burst
+      spawnBurst(cx, cy, 18);
+      setTimeout(() => {
+        wand.remove();
+        setTimeout(() => {
+          overlay.classList.remove('active');
+          if (callback) callback();
+        }, 500);
+      }, 350);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+// ══════════════════════════════════════════
+// OPEN INVITATION
+// ══════════════════════════════════════════
 function openInvitation() {
   const op = document.getElementById('opening');
   const main = document.getElementById('main-wrapper');
-  op.classList.add('closing');
-  main.classList.add('active');
-  const mus = document.getElementById('bgMusic');
-  mus.volume = 0.28;
-  mus.play().catch(() => {});
-  isMusicOn = true;
-  setTimeout(() => { op.classList.add('gone'); }, 1500);
-  setTimeout(initReveal, 120);
-  startCountdown();
+
+  // Run magic wand first
+  runMagicWand(function() {
+    // After wand completes, fade out opening screen
+    op.classList.add('closing');
+    main.classList.add('active');
+    setTimeout(() => { op.classList.add('gone'); }, 1500);
+    setTimeout(initReveal, 120);
+    startCountdown();
+  });
+
+  // Start YouTube audio
+  if (ytReady && ytPlayer) {
+    ytPlayer.playVideo();
+    isMusicOn = true;
+  } else {
+    ytStartRequested = true;
+  }
 }
 
-// ── MUSIC
-let isMusicOn = true;
-function toggleMusic() {
-  const mus = document.getElementById('bgMusic');
-  const btn = document.getElementById('musicBtn');
-  isMusicOn ? (mus.pause(), btn.classList.add('muted'), isMusicOn = false)
-            : (mus.play().catch(()=>{}), btn.classList.remove('muted'), isMusicOn = true);
+// ══════════════════════════════════════════
+// TASK 3: Apple Calendar .ics Download
+// ══════════════════════════════════════════
+function downloadICS() {
+  var icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Wedding Invitation//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    'DTSTART:20260517T110000',
+    'DTEND:20260517T130000',
+    'SUMMARY:Nikah & Walimah – Abu Thahir & Sabrin',
+    'DESCRIPTION:You are cordially invited to the Nikah and Walimah of F. Syed Abu Thahir & H. Seeni Sabrin Fathima.',
+    'LOCATION:Thahir Bungalow\\, Keelakarai\\, Tamil Nadu',
+    'STATUS:CONFIRMED',
+    'SEQUENCE:0',
+    'BEGIN:VALARM',
+    'TRIGGER:-PT60M',
+    'ACTION:DISPLAY',
+    'DESCRIPTION:Reminder: Nikah & Walimah in 1 hour',
+    'END:VALARM',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+
+  var blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'NikahWalimah_AbuThahir_Sabrin.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // ── SCROLL REVEAL
