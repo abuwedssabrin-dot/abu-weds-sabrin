@@ -1,564 +1,848 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seeni Sabrin Fathima & F. Syed Abu Thahir - Wedding Invitation</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation – Abu Thahir & Sabrin Fathima</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e2c97e;
+  --gold-pale: #f5e9c9;
+  --gold-dim: #9a7d3a;
+  --dark-overlay: rgba(10,8,5,0.72);
+  --text-white: #fff;
+  --text-cream: #f0e6cc;
+  --text-muted: rgba(255,255,255,0.52);
+  --card-bg: rgba(15,12,8,0.68);
+  --card-border: rgba(201,168,76,0.22);
+  --radius: 6px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0a0805;
+  color: var(--text-cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    <style>
-        :root {
-            --gold-primary: #D4AF37;
-            --gold-secondary: #F3E5AB;
-            --gold-dark: #AA8322;
-            --bg-dark: #121212;
-            --bg-card: #1E1E1E;
-        }
+/* BG */
+.bg-texture {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 130% 70% at 50% 0%, rgba(180,140,60,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 85% 80%, rgba(150,110,40,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 15% 60%, rgba(120,90,30,0.08) 0%, transparent 45%),
+    linear-gradient(165deg, #1a1206 0%, #0d0a05 40%, #100c06 70%, #1a1408 100%);
+}
+.bg-texture::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a84c' fill-opacity='0.022'%3E%3Cpath d='M40 5 C44 15 50 18 40 24 C30 18 36 15 40 5Z'/%3E%3Cpath d='M40 75 C44 65 50 62 40 56 C30 62 36 65 40 75Z'/%3E%3Cpath d='M5 40 C15 36 18 30 24 40 C18 50 15 44 5 40Z'/%3E%3Cpath d='M75 40 C65 36 62 30 56 40 C62 50 65 44 75 40Z'/%3E%3C/g%3E%3C/svg%3E");
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-dark);
-            color: #E5E7EB;
-            overflow-x: hidden;
-        }
+/* MAIN */
+#main-wrapper { position: relative; z-index: 1; display: none; }
+#main-wrapper.active { display: block; }
 
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
+/* ── OPENING ── */
+#opening {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 2rem;
+  background: linear-gradient(165deg, #100d06 0%, #09070302 50%, #15100a 100%);
+  background-color: #0c0903;
+  transition: opacity 1.4s ease, visibility 1.4s ease;
+}
+#opening.closing { opacity: 0; visibility: hidden; }
+#opening.gone { display: none !important; }
 
-        .font-script {
-            font-family: 'Great Vibes', cursive;
-        }
+.op-mandala {
+  width: min(210px, 58vw); margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 1.2s ease 0.3s forwards;
+}
+.op-bismi {
+  font-family: 'Amiri', serif; font-size: clamp(1rem, 3.5vw, 1.4rem);
+  color: var(--gold-dim); direction: rtl; margin-bottom: 1.8rem;
+  opacity: 0; animation: fadeUp 1s ease 0.7s forwards;
+}
+.op-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 9vw, 5.2rem);
+  color: var(--gold-light); font-weight: 400; line-height: 1.05;
+  text-shadow: 0 0 80px rgba(201,168,76,0.35);
+  opacity: 0; animation: fadeUp 1s ease 1s forwards;
+}
+.op-sub {
+  font-size: clamp(0.62rem, 2vw, 0.75rem);
+  letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0.8rem 0 2.5rem;
+  opacity: 0; animation: fadeUp 1s ease 1.2s forwards;
+}
+.op-line {
+  width: 70px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 2.5rem;
+  opacity: 0; animation: fadeUp 1s ease 1.3s forwards;
+}
+#openBtn {
+  padding: 0.95rem 3.8rem;
+  background: transparent; border: 1px solid var(--gold);
+  color: var(--gold-light);
+  font-family: 'Poppins', sans-serif; font-size: 0.73rem;
+  letter-spacing: 0.42em; text-transform: uppercase;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: color 0.4s ease, box-shadow 0.4s ease;
+  opacity: 0; animation: fadeUp 1s ease 1.5s forwards;
+  border-radius: 2px;
+}
+#openBtn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.04));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+}
+#openBtn:hover { box-shadow: 0 0 40px rgba(201,168,76,0.32); color: #fff; }
+#openBtn:hover::before { transform: scaleX(1); }
 
-        /* Luxury Gold Text Gradient */
-        .text-gold {
-            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8322 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* ── NAV DOCK ── */
+#nav-dock {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  background: rgba(7,5,2,0.94); backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(201,168,76,0.13);
+  display: flex; justify-content: space-around; align-items: center;
+  padding: 0.55rem 0.5rem 0.7rem;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.18rem;
+  color: var(--text-muted); font-size: 0.52rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 4px;
+  transition: color 0.3s ease; white-space: nowrap;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-item:hover, .nav-item.active { color: var(--gold-light); }
+.nav-icon { font-size: 1.05rem; line-height: 1; }
 
-        /* Gold Border Gradient */
-        .border-gold {
-            border-image: linear-gradient(135deg, #D4AF37, #AA8322, #F3E5AB) 1;
-        }
+/* ── MUSIC BTN ── */
+#musicBtn {
+  position: fixed; bottom: 4.2rem; right: 1.2rem; z-index: 600;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(10,7,3,0.92); border: 1px solid var(--gold-dim);
+  color: var(--gold-light); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(12px); transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.55);
+}
+#musicBtn:hover { box-shadow: 0 0 28px rgba(201,168,76,0.28); transform: scale(1.06); }
+.music-wave { display: flex; gap: 2px; align-items: center; height: 15px; }
+.music-wave span {
+  display: block; width: 2.5px; background: var(--gold-light);
+  border-radius: 2px; animation: wave 0.8s ease-in-out infinite;
+}
+.music-wave span:nth-child(1) { height: 6px; animation-delay: 0s; }
+.music-wave span:nth-child(2) { height: 13px; animation-delay: 0.15s; }
+.music-wave span:nth-child(3) { height: 8px; animation-delay: 0.3s; }
+.music-wave span:nth-child(4) { height: 11px; animation-delay: 0.45s; }
+.muted .music-wave span { animation: none; background: rgba(255,255,255,0.25); }
+@keyframes wave { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
 
-        /* Premium Textures and Overlays */
-        .bg-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
-        }
+/* ── SECTIONS ── */
+section {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 5.5rem 1.5rem 6.5rem; position: relative;
+}
+section + section { border-top: 1px solid rgba(201,168,76,0.07); }
+.container { width: 100%; max-width: 680px; margin: 0 auto; }
 
-        /* Islamic Geometric Silhouette */
-        .islamic-arch {
-            clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 0 100%, 0 25%);
-        }
+.section-badge {
+  display: inline-block;
+  font-size: 0.58rem; letter-spacing: 0.45em; text-transform: uppercase;
+  color: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.18);
+  padding: 0.28rem 1rem; border-radius: 20px; margin-bottom: 1.6rem;
+  background: rgba(201,168,76,0.04);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5.5vw, 2.7rem);
+  color: var(--gold-light); font-weight: 400;
+  text-align: center; line-height: 1.2; margin-bottom: 0.5rem;
+}
+.gold-rule {
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0.9rem auto;
+}
 
-        /* Custom glow effects */
-        .glow-gold {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        }
+/* ── HERO ── */
+#hero { min-height: 100vh; text-align: center; overflow: hidden; padding-top: 3.5rem; padding-bottom: 6rem; }
+.hero-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 30% at 50% 90%, rgba(201,168,76,0.04) 0%, transparent 55%);
+}
+.hero-bismi {
+  font-family: 'Amiri', serif; font-size: clamp(1.6rem, 5vw, 2.3rem);
+  color: var(--gold); direction: rtl; margin-bottom: 0.4rem;
+}
+.hero-in-name {
+  font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 2.8rem;
+}
+.hero-vine { margin: 0 auto 2.8rem; display: block; }
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.1rem, 8vw, 4.3rem);
+  color: var(--text-white); font-weight: 400; line-height: 1.08;
+  text-shadow: 0 2px 35px rgba(0,0,0,0.5);
+}
+.hero-amp {
+  display: block; font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: clamp(1.6rem, 5.5vw, 2.8rem);
+  color: var(--gold-light); margin: 0.3rem 0; opacity: 0.82;
+}
+.hero-sub {
+  font-size: clamp(0.62rem, 1.8vw, 0.73rem);
+  letter-spacing: 0.36em; text-transform: uppercase;
+  color: var(--text-muted); margin: 1.6rem 0 2.8rem;
+}
+.hero-date-pill {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  border: 1px solid var(--card-border);
+  padding: 0.7rem 2rem; border-radius: 30px;
+  background: var(--card-bg); backdrop-filter: blur(10px);
+  font-size: 0.78rem; color: var(--gold-light); letter-spacing: 0.08em;
+}
+.hero-date-pill .dim { color: var(--text-muted); font-size: 0.68rem; }
+.hero-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
-        .glow-gold-hover:hover {
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            transition: all 0.5s ease;
-        }
+/* COUNTDOWN */
+.countdown-wrap {
+  display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap;
+  margin: 2.5rem 0 0.5rem;
+}
+.cd-unit {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 68px; border: 1px solid var(--card-border);
+  border-radius: var(--radius); padding: 0.95rem 0.7rem 0.8rem;
+  background: var(--card-bg); backdrop-filter: blur(10px);
+}
+.cd-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5.5vw, 2.3rem);
+  color: var(--gold-light); line-height: 1; min-width: 2ch; text-align: center;
+}
+.cd-label {
+  font-size: 0.53rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem;
+}
 
-        /* Smooth reveal animations on scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
+/* FAMILY */
+#family { min-height: auto; }
+.family-subtitle {
+  text-align: center; font-size: 0.77rem;
+  color: var(--text-muted); line-height: 2; margin: 1.5rem 0;
+}
+.family-grid {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem 0.8rem; align-items: center; margin-top: 2.5rem;
+}
+@media(max-width: 500px) {
+  .family-grid { grid-template-columns: 1fr; }
+  .fam-divider { flex-direction: row; }
+  .fam-divider-line { width: 60px; height: 1px; min-height: auto; }
+}
+.family-block { padding: 1.6rem; text-align: center; }
+.family-role {
+  font-size: 0.58rem; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--gold-dim); margin-bottom: 0.9rem;
+}
+.family-person {
+  font-family: 'Playfair Display', serif; font-size: clamp(0.92rem, 2.5vw, 1.12rem);
+  color: var(--text-white); font-weight: 400; line-height: 1.5; margin-bottom: 0.5rem;
+}
+.family-parent { font-size: 0.74rem; color: var(--text-muted); line-height: 1.95; }
+.family-parent strong { color: var(--text-cream); font-weight: 400; }
+.fam-divider {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+}
+.fam-divider-line {
+  flex: 1; width: 1px; min-height: 55px;
+  background: linear-gradient(180deg, transparent, var(--gold-dim), transparent);
+}
+.fam-gem {
+  width: 9px; height: 9px; background: var(--gold);
+  transform: rotate(45deg); opacity: 0.65;
+  animation: floatGem 3s ease-in-out infinite;
+}
+@keyframes floatGem {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(-6px); }
+}
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+/* EVENTS */
+.event-date-block {
+  text-align: center; margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  border: 1px solid var(--card-border); border-radius: var(--radius);
+  background: var(--card-bg); backdrop-filter: blur(12px);
+  max-width: 360px; position: relative;
+}
+.event-date-block::before, .event-date-block::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.event-date-block::before { top: 0; }
+.event-date-block::after { bottom: 0; }
+.ev-day { font-size: 0.63rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-dim); }
+.ev-num {
+  font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 9vw, 4.2rem);
+  color: var(--gold-light); line-height: 1; margin: 0.25rem 0;
+}
+.ev-month {
+  font-family: 'Playfair Display', serif; font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--text-cream);
+}
+.ev-hijri { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.6rem; letter-spacing: 0.1em; }
+.events-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.5rem; }
+@media(max-width: 420px) { .events-cards { grid-template-columns: 1fr; } }
+.event-card {
+  border: 1px solid var(--card-border); border-radius: var(--radius);
+  padding: 1.8rem 1.2rem; text-align: center;
+  background: var(--card-bg); backdrop-filter: blur(10px);
+  transition: transform 0.4s ease, box-shadow 0.4s ease; position: relative; overflow: hidden;
+}
+.event-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.event-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.45), 0 0 25px rgba(201,168,76,0.1); }
+.ev-card-icon { font-size: 1.9rem; margin-bottom: 0.8rem; }
+.ev-card-type {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem;
+  color: var(--gold-light); margin-bottom: 0.6rem;
+}
+.ev-card-time { font-size: 0.73rem; color: var(--text-muted); letter-spacing: 0.1em; }
+.cal-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.8rem; border: 1px solid var(--gold);
+  color: var(--gold-light); text-decoration: none;
+  font-family: 'Poppins', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.28em; text-transform: uppercase; border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.cal-btn:hover { background: rgba(201,168,76,0.12); box-shadow: 0 0 22px rgba(201,168,76,0.22); color: #fff; }
 
-        /* Opening Curtain Effect */
-        #opening-overlay {
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-        }
+/* LOCATION */
+.map-frame {
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 45px rgba(0,0,0,0.65); margin-bottom: 1.5rem;
+}
+.map-frame iframe { display: block; }
+.loc-name {
+  font-family: 'Playfair Display', serif; font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--text-cream); text-align: center; margin: 1.5rem 0 0.4rem;
+}
+.loc-addr { text-align: center; font-size: 0.76rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; }
 
-        .slide-up {
-            transform: translateY(-100%);
-        }
+/* CONTACT */
+#contact { min-height: auto; padding: 4rem 1.5rem 5rem; }
+.contact-cards { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2rem; }
+.contact-card {
+  border: 1px solid var(--card-border); border-radius: var(--radius);
+  padding: 1.5rem 2rem; background: var(--card-bg); backdrop-filter: blur(10px);
+  text-align: center; min-width: 175px; transition: all 0.3s ease; text-decoration: none;
+}
+.contact-card:hover { box-shadow: 0 0 28px rgba(201,168,76,0.13); transform: translateY(-2px); }
+.contact-num {
+  font-family: 'Playfair Display', serif; font-size: 1.08rem;
+  color: var(--gold-light); letter-spacing: 0.04em;
+}
+.contact-lbl { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem; }
 
-        /* Custom corner decorations and dividers */
-        .corner-top-left {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-            border-top: 2px solid var(--gold-primary);
-            border-left: 2px solid var(--gold-primary);
-        }
+/* RSVP */
+.rsvp-card {
+  border: 1px solid var(--card-border); border-radius: var(--radius);
+  padding: 2.5rem 2rem; background: var(--card-bg); backdrop-filter: blur(14px);
+  margin-top: 2rem;
+}
+.form-label {
+  display: block; font-size: 0.62rem; letter-spacing: 0.32em;
+  text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem;
+}
+.form-input {
+  width: 100%; padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.035); border: 1px solid rgba(201,168,76,0.18);
+  color: var(--text-cream); font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem; border-radius: 3px; outline: none;
+  transition: border-color 0.3s ease; margin-bottom: 1.2rem;
+}
+.form-input::placeholder { color: rgba(255,255,255,0.22); }
+.form-input:focus { border-color: var(--gold-dim); }
+.rsvp-btns { display: flex; gap: 1rem; }
+.rsvp-btn {
+  flex: 1; padding: 0.9rem 1rem; border: 1px solid rgba(201,168,76,0.32);
+  background: transparent; color: var(--text-cream);
+  font-family: 'Poppins', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; border-radius: 3px; transition: all 0.3s ease;
+}
+.rsvp-btn.yes { border-color: var(--gold); color: var(--gold-light); }
+.rsvp-btn.yes:hover { background: rgba(201,168,76,0.16); box-shadow: 0 0 22px rgba(201,168,76,0.2); }
+.rsvp-btn.no:hover { background: rgba(255,255,255,0.05); }
+.rsvp-resp {
+  margin-top: 1.5rem; padding: 1.2rem;
+  border: 1px solid rgba(201,168,76,0.2); border-radius: var(--radius);
+  background: rgba(201,168,76,0.06); font-size: 0.83rem;
+  color: var(--gold-light); text-align: center;
+  display: none; animation: fadeUp 0.5s ease forwards;
+}
+.rsvp-resp.show { display: block; }
 
-        .corner-bottom-right {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border-bottom: 2px solid var(--gold-primary);
-            border-right: 2px solid var(--gold-primary);
-        }
+/* WISHES */
+.wishes-intro { text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.9; }
+.wishes-card {
+  border: 1px solid var(--card-border); border-radius: var(--radius);
+  padding: 2.5rem 2rem; background: var(--card-bg); backdrop-filter: blur(14px);
+}
+.form-textarea {
+  width: 100%; padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.035); border: 1px solid rgba(201,168,76,0.18);
+  color: var(--text-cream); font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem; border-radius: 3px; outline: none;
+  resize: vertical; min-height: 115px; margin-bottom: 1.2rem;
+  transition: border-color 0.3s ease;
+}
+.form-textarea::placeholder { color: rgba(255,255,255,0.22); }
+.form-textarea:focus { border-color: var(--gold-dim); }
+.wa-btn {
+  width: 100%; padding: 1rem;
+  background: linear-gradient(135deg, #1a7a3f, #128c35);
+  border: none; color: #fff; font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
+  cursor: pointer; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  transition: all 0.3s ease;
+}
+.wa-btn:hover { background: linear-gradient(135deg, #1f9046, #15a33d); box-shadow: 0 6px 28px rgba(18,140,53,0.4); }
 
-        /* Pulse animations for elegant aesthetics */
-        @keyframes subtle-pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.02); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
+/* FOOTER */
+footer {
+  padding: 4rem 2rem 7rem; text-align: center;
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+.ft-arabic {
+  font-family: 'Amiri', serif; font-size: clamp(1rem, 3.5vw, 1.4rem);
+  color: var(--gold); direction: rtl; margin-bottom: 1rem; opacity: 0.88;
+}
+.ft-en {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(0.82rem, 2.5vw, 1rem); color: var(--text-muted);
+  max-width: 450px; margin: 0 auto 2rem; line-height: 1.95;
+}
+.ft-names { font-family: 'Playfair Display', serif; font-size: 0.82rem; color: var(--gold-dim); letter-spacing: 0.22em; margin-bottom: 0.4rem; }
+.ft-date { font-size: 0.63rem; color: rgba(255,255,255,0.18); letter-spacing: 0.2em; }
+.ft-tag { font-size: 0.68rem; color: rgba(201,168,76,0.32); margin-top: 1rem; letter-spacing: 0.14em; }
 
-        .gold-pulse {
-            animation: subtle-pulse 3s infinite ease-in-out;
-        }
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.88s cubic-bezier(0.22,0.61,0.36,1), transform 0.88s cubic-bezier(0.22,0.61,0.36,1); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.rd1 { transition-delay: 0.1s; } .rd2 { transition-delay: 0.2s; }
+.rd3 { transition-delay: 0.3s; } .rd4 { transition-delay: 0.4s; }
+.rd5 { transition-delay: 0.5s; }
 
-        /* Blur for luxury backdrop */
-        .glass-card {
-            background: rgba(30, 30, 30, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold-primary);
-            border-radius: 3px;
-        }
-
-        /* Floating music toggle animation */
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .spin-slow {
-            animation: spin-slow 8s linear infinite;
-        }
-    </style>
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0a0805; }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+</style>
 </head>
-<body class="bg-pattern antialiased select-none">
+<body>
 
-    <!-- BACKGROUND AUDIO -->
-    <audio id="bgMusic" loop>
-        <!-- A soft instrumental royalty-free track as a reliable fallback for nasheed -->
-        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
-        <!-- Main nasheed track -->
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-    </audio>
+<div class="bg-texture"></div>
+<audio id="bgMusic" loop preload="none">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+</audio>
 
-    <!-- MANDATORY OPENING SCREEN OVERLAY -->
-    <div id="opening-overlay" class="fixed inset-0 z-50 bg-[#121212] flex flex-col items-center justify-center text-center p-6 bg-pattern">
-        <!-- Artistic Border -->
-        <div class="absolute inset-12 border border-amber-700/30 pointer-events-none"></div>
-        <div class="absolute inset-8 border border-amber-600/10 pointer-events-none"></div>
-        
-        <div class="mb-8 z-10">
-            <i class="fa-solid fa-kaaba text-4xl text-gold mb-4 opacity-70"></i>
-            <h3 class="font-serif text-lg tracking-[0.2em] text-gray-400 mb-2 uppercase">Bismillah-ir-Rahman-ir-Rahim</h3>
-            <h1 class="font-serif text-4xl md:text-5xl text-gold mb-2">You're Invited</h1>
-            <p class="text-gray-300 font-light max-w-sm tracking-wide">To the blessed union of Sabrin & Syed Thahir</p>
+<!-- ════════ OPENING ════════ -->
+<div id="opening">
+  <svg class="op-mandala" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="120" cy="120" r="105" stroke="#c9a84c" stroke-width="0.4" stroke-dasharray="6 6" opacity="0.35"/>
+    <circle cx="120" cy="120" r="85" stroke="#c9a84c" stroke-width="0.3" opacity="0.28"/>
+    <circle cx="120" cy="120" r="65" stroke="#c9a84c" stroke-width="0.5" opacity="0.32"/>
+    <g transform="translate(120,120)">
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.55" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.45" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.55" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.45" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.55" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.45" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.55" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-50" rx="7" ry="22" fill="#c9a84c" opacity="0.45" transform="rotate(315)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(22.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(67.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(112.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(157.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(202.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(247.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(292.5)"/>
+      <ellipse cx="0" cy="-32" rx="4.5" ry="13" fill="#c9a84c" opacity="0.28" transform="rotate(337.5)"/>
+      <circle r="17" fill="#c9a84c" opacity="0.13"/>
+      <circle r="10" fill="#c9a84c" opacity="0.22"/>
+      <circle r="5" fill="#c9a84c" opacity="0.72"/>
+    </g>
+  </svg>
+  <div class="op-bismi">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+  <div class="op-title">You're Invited</div>
+  <div class="op-sub">To a blessed nikah &amp; walimah</div>
+  <div class="op-line"></div>
+  <button id="openBtn" onclick="openInvitation()">Open Invitation</button>
+</div>
+
+<!-- ════════ MAIN ════════ -->
+<div id="main-wrapper">
+
+  <button id="musicBtn" onclick="toggleMusic()" title="Toggle Music">
+    <div class="music-wave"><span></span><span></span><span></span><span></span></div>
+  </button>
+
+  <nav id="nav-dock">
+    <a href="#rsvp"    class="nav-item"><span class="nav-icon">✉</span>RSVP</a>
+    <a href="#wishes"  class="nav-item"><span class="nav-icon">💚</span>Wishes</a>
+    <a href="#contact" class="nav-item"><span class="nav-icon">📞</span>Contact</a>
+    <a href="#location"class="nav-item"><span class="nav-icon">📍</span>Location</a>
+    <a href="#events"  class="nav-item"><span class="nav-icon">📅</span>Events</a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="container" style="position:relative;z-index:1;text-align:center;">
+
+      <div class="hero-bismi reveal">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <div class="hero-in-name reveal rd1">In the Name of Allah, the Most Gracious, the Most Merciful</div>
+
+      <!-- vine divider -->
+      <svg class="hero-vine reveal rd2" width="min(300px,75vw)" height="90" viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="45" x2="128" y2="45" stroke="#c9a84c" stroke-width="0.55" opacity="0.5"/>
+        <g transform="translate(160,45)">
+          <ellipse cx="0" cy="-20" rx="5.5" ry="16" fill="#c9a84c" opacity="0.6" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="16" fill="#c9a84c" opacity="0.5" transform="rotate(60)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="16" fill="#c9a84c" opacity="0.5" transform="rotate(120)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="16" fill="#c9a84c" opacity="0.6" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="16" fill="#c9a84c" opacity="0.5" transform="rotate(240)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="16" fill="#c9a84c" opacity="0.5" transform="rotate(300)"/>
+          <circle r="7" fill="#c9a84c" opacity="0.22"/>
+          <circle r="4" fill="#c9a84c" opacity="0.72"/>
+        </g>
+        <line x1="192" y1="45" x2="320" y2="45" stroke="#c9a84c" stroke-width="0.55" opacity="0.5"/>
+        <path d="M55 45 Q62 30 75 32" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
+        <path d="M90 45 Q97 60 110 58" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
+        <path d="M265 45 Q258 30 245 32" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
+        <path d="M230 45 Q223 60 210 58" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
+        <circle cx="75" cy="32" r="3.5" fill="#c9a84c" opacity="0.45"/>
+        <circle cx="110" cy="58" r="3" fill="#c9a84c" opacity="0.4"/>
+        <circle cx="245" cy="32" r="3.5" fill="#c9a84c" opacity="0.45"/>
+        <circle cx="210" cy="58" r="3" fill="#c9a84c" opacity="0.4"/>
+      </svg>
+
+      <div class="reveal rd2">
+        <div class="hero-name">F. Syed Abu Thahir</div>
+        <div class="hero-amp">&amp;</div>
+        <div class="hero-name">H. Seeni Sabrin Fathima</div>
+      </div>
+      <div class="hero-sub reveal rd3">Join us in our blessed union</div>
+      <div class="gold-rule reveal rd3"></div>
+      <div class="hero-date-pill reveal rd4">
+        <span class="dim">Sunday</span>
+        <span class="hero-dot"></span>
+        17 May 2026
+        <span class="hero-dot"></span>
+        <span class="dim">Keelakarai</span>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-wrap reveal rd5">
+        <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Days</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Hours</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Mins</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Secs</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAMILY ─── -->
+  <section id="family">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-badge reveal">With the blessings of our families</div>
+        <h2 class="section-title reveal">Our Families</h2>
+        <div class="gold-rule reveal"></div>
+        <p class="family-subtitle reveal rd1">
+          Assalamu Alaikum Wa Rahmatullahi Wa Barakatuh<br>
+          With full gratitude to Allah, we joyfully announce the union of our beloved children.
+        </p>
+      </div>
+      <div class="family-grid reveal rd2">
+        <div class="family-block">
+          <div class="family-role">The Groom</div>
+          <div class="family-person">F. Syed Abu Thahir</div>
+          <div class="gold-rule" style="width:32px;margin:.8rem auto;"></div>
+          <div class="family-parent">Son of<br><strong>Mr. A. S. Feroz Khan</strong><br>&amp; <strong>Mrs. S. Nazrath Begum</strong></div>
         </div>
+        <div class="fam-divider">
+          <div class="fam-divider-line"></div>
+          <div class="fam-gem"></div>
+          <div class="fam-divider-line"></div>
+        </div>
+        <div class="family-block">
+          <div class="family-role">The Bride</div>
+          <div class="family-person">H. Seeni Sabrin Fathima</div>
+          <div class="gold-rule" style="width:32px;margin:.8rem auto;"></div>
+          <div class="family-parent">Daughter of<br><strong>Mr. Hassan Abdul Cader</strong><br>&amp; <strong>Mrs. Farzana</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <button id="openInvitationBtn" class="z-10 px-8 py-3 glass-card text-gold font-medium tracking-[0.2em] rounded-full uppercase text-sm border-gold glow-gold-hover transition-all duration-300 transform hover:scale-105 cursor-pointer">
-            Open Invitation
+  <!-- ─── EVENTS ─── -->
+  <section id="events">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-badge reveal">Mark your calendars</div>
+        <h2 class="section-title reveal">The Celebration</h2>
+        <div class="gold-rule reveal"></div>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <div class="event-date-block reveal rd1">
+          <div class="ev-day">Sunday</div>
+          <div class="ev-num">17</div>
+          <div class="ev-month">May 2026</div>
+          <div class="ev-hijri">30 Dhul Qa'dah 1447 AH</div>
+        </div>
+      </div>
+      <div class="events-cards">
+        <div class="event-card reveal rd2">
+          <div class="ev-card-icon">🕌</div>
+          <div class="ev-card-type">Nikah</div>
+          <div class="gold-rule" style="width:26px;margin:.6rem auto;"></div>
+          <div class="ev-card-time">11:00 AM – 12:00 PM</div>
+        </div>
+        <div class="event-card reveal rd3">
+          <div class="ev-card-icon">🌙</div>
+          <div class="ev-card-type">Walimah</div>
+          <div class="gold-rule" style="width:26px;margin:.6rem auto;"></div>
+          <div class="ev-card-time">12:00 PM Onwards</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:2rem;" class="reveal rd4">
+        <a class="cal-btn" href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Nikah+%26+Walimah+Abu+Thahir+%26+Sabrin&dates=20260517T053000/20260517T120000&details=Thahir+Bungalow,+Keelakarai&location=Keelakarai,+Tamil+Nadu&sf=true&output=xml" target="_blank">
+          📅 Add to Google Calendar
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LOCATION ─── -->
+  <section id="location">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-badge reveal">Find your way to us</div>
+        <h2 class="section-title reveal">Venue</h2>
+        <div class="gold-rule reveal"></div>
+        <div class="loc-name reveal rd1">Thahir Bungalow</div>
+        <div class="loc-addr reveal rd1">Keelakarai, Tamil Nadu</div>
+      </div>
+      <div class="map-frame reveal rd2">
+        <iframe src="https://maps.google.com/maps?q=Keelakarai,+Tamil+Nadu,+India&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" title="Keelakarai Map"></iframe>
+      </div>
+      <div style="display:flex;justify-content:center;" class="reveal rd3">
+        <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="cal-btn">📍 Open in Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-badge reveal">Get in touch</div>
+        <h2 class="section-title reveal">Contact</h2>
+        <div class="gold-rule reveal"></div>
+      </div>
+      <div class="contact-cards">
+        <a href="tel:+919840950555" class="contact-card reveal rd1">
+          <div class="contact-num">98409 50555</div>
+          <div class="contact-lbl">Call / WhatsApp</div>
+        </a>
+        <a href="tel:+919840928566" class="contact-card reveal rd2">
+          <div class="contact-num">98409 28566</div>
+          <div class="contact-lbl">Call / WhatsApp</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── RSVP ─── -->
+  <section id="rsvp">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-badge reveal">We'd love to know</div>
+        <h2 class="section-title reveal">RSVP</h2>
+        <div class="gold-rule reveal"></div>
+        <p style="font-size:.77rem;color:var(--text-muted);margin-top:.8rem;" class="reveal rd1">Will you be joining us on this special day?</p>
+      </div>
+      <div class="rsvp-card reveal rd2">
+        <label class="form-label" for="rsvpName">Your Name</label>
+        <input type="text" id="rsvpName" class="form-input" placeholder="Enter your full name">
+        <div class="rsvp-btns">
+          <button class="rsvp-btn yes" onclick="doRSVP('yes')">✓ Will Attend</button>
+          <button class="rsvp-btn no"  onclick="doRSVP('no')">✗ Cannot Attend</button>
+        </div>
+        <div class="rsvp-resp" id="rsvpResp"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WISHES ─── -->
+  <section id="wishes">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-badge reveal">Your blessings mean everything</div>
+        <h2 class="section-title reveal">Send Your Wishes</h2>
+        <div class="gold-rule reveal"></div>
+        <p class="wishes-intro reveal rd1">
+          Share your heartfelt du'as and blessings directly with the couple via WhatsApp.
+        </p>
+      </div>
+      <div class="wishes-card reveal rd2">
+        <label class="form-label" for="wName">Your Name</label>
+        <input type="text" id="wName" class="form-input" placeholder="Enter your name">
+        <label class="form-label" for="wMsg">Your Wish / Du'a</label>
+        <textarea id="wMsg" class="form-textarea" placeholder="Write your heartfelt wishes and du'as here..."></textarea>
+        <button class="wa-btn" onclick="sendWishes()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Send Wishes via WhatsApp
         </button>
+      </div>
     </div>
+  </section>
 
-    <!-- MAIN APP WRAPPER -->
-    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <svg viewBox="0 0 400 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:min(340px,80vw);margin:0 auto 3rem;display:block;opacity:0.42;">
+      <line x1="0" y1="25" x2="168" y2="25" stroke="#c9a84c" stroke-width="0.6"/>
+      <g transform="translate(200,25)">
+        <ellipse cx="0" cy="-16" rx="5" ry="13" fill="#c9a84c" opacity="0.7" transform="rotate(0)"/>
+        <ellipse cx="0" cy="-16" rx="5" ry="13" fill="#c9a84c" opacity="0.6" transform="rotate(60)"/>
+        <ellipse cx="0" cy="-16" rx="5" ry="13" fill="#c9a84c" opacity="0.6" transform="rotate(120)"/>
+        <ellipse cx="0" cy="-16" rx="5" ry="13" fill="#c9a84c" opacity="0.7" transform="rotate(180)"/>
+        <ellipse cx="0" cy="-16" rx="5" ry="13" fill="#c9a84c" opacity="0.6" transform="rotate(240)"/>
+        <ellipse cx="0" cy="-16" rx="5" ry="13" fill="#c9a84c" opacity="0.6" transform="rotate(300)"/>
+        <circle r="5" fill="#c9a84c" opacity="0.82"/>
+      </g>
+      <line x1="232" y1="25" x2="400" y2="25" stroke="#c9a84c" stroke-width="0.6"/>
+    </svg>
+    <div class="ft-arabic">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>
+    <div class="ft-en">"May Allah bless this union with love, mercy, and barakah — and keep them united in all that is good."</div>
+    <div class="ft-names">Abu Thahir ✦ Sabrin Fathima</div>
+    <div class="ft-date">17 · 05 · 2026 &nbsp;|&nbsp; Keelakarai</div>
+    <div class="ft-tag">#AUnionBlessedByAllah</div>
+  </footer>
 
-        <!-- FLOATING MUSIC BUTTON -->
-        <div class="fixed bottom-6 right-6 z-40">
-            <button id="musicToggle" class="w-12 h-12 glass-card rounded-full flex items-center justify-center text-gold border-gold glow-gold cursor-pointer transition-all duration-300 hover:scale-110">
-                <i id="musicIcon" class="fa-solid fa-music text-lg spin-slow"></i>
-            </button>
-        </div>
+</div><!-- /main-wrapper -->
 
-        <!-- 1. HERO SECTION -->
-        <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-[url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80')] bg-cover bg-center bg-fixed">
-            <!-- Dark Tint Overlay -->
-            <div class="absolute inset-0 bg-black/85"></div>
-            
-            <!-- Floral/Geometric Silhouette Container -->
-            <div class="relative z-10 max-w-3xl w-full p-8 glass-card rounded-3xl border-gold reveal active">
-                
-                <div class="mb-6">
-                    <span class="font-serif text-lg tracking-[0.3em] text-gold uppercase opacity-90">Bismillah-ir-Rahman-ir-Rahim</span>
-                </div>
-                
-                <h3 class="font-serif text-xl md:text-2xl text-gray-300 mb-8 tracking-wide italic">In the name of Allah, the Most Gracious, the Most Merciful</h3>
+<script>
+// ── OPEN INVITATION
+function openInvitation() {
+  const op = document.getElementById('opening');
+  const main = document.getElementById('main-wrapper');
+  op.classList.add('closing');
+  main.classList.add('active');
+  const mus = document.getElementById('bgMusic');
+  mus.volume = 0.28;
+  mus.play().catch(() => {});
+  isMusicOn = true;
+  setTimeout(() => { op.classList.add('gone'); }, 1500);
+  setTimeout(initReveal, 120);
+  startCountdown();
+}
 
-                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-gold mb-4 leading-tight">
-                    Seeni Sabrin Fathima
-                </h1>
-                
-                <div class="flex items-center justify-center my-4">
-                    <div class="h-[1px] w-12 bg-amber-600/50"></div>
-                    <span class="font-script text-5xl md:text-6xl text-gold mx-6">&</span>
-                    <div class="h-[1px] w-12 bg-amber-600/50"></div>
-                </div>
+// ── MUSIC
+let isMusicOn = true;
+function toggleMusic() {
+  const mus = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicBtn');
+  isMusicOn ? (mus.pause(), btn.classList.add('muted'), isMusicOn = false)
+            : (mus.play().catch(()=>{}), btn.classList.remove('muted'), isMusicOn = true);
+}
 
-                <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-gold mb-8 leading-tight">
-                    F. Syed Abu Thahir
-                </h1>
+// ── SCROLL REVEAL
+function initReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
 
-                <p class="font-light text-lg tracking-[0.1em] text-gray-200 mt-6 max-w-md mx-auto">
-                    Join us in our blessed union as we begin our journey together in love and faith.
-                </p>
+// ── COUNTDOWN
+function startCountdown() {
+  const t = new Date('2026-05-17T11:00:00').getTime();
+  const tick = () => {
+    const diff = t - Date.now();
+    if (diff <= 0) { ['d','h','m','s'].forEach(k => document.getElementById('cd-'+k).textContent='00'); return; }
+    const p = n => String(Math.floor(n)).padStart(2,'0');
+    document.getElementById('cd-d').textContent = p(diff/86400000);
+    document.getElementById('cd-h').textContent = p((diff%86400000)/3600000);
+    document.getElementById('cd-m').textContent = p((diff%3600000)/60000);
+    document.getElementById('cd-s').textContent = p((diff%60000)/1000);
+  };
+  tick(); setInterval(tick, 1000);
+}
 
-                <div class="mt-8">
-                    <div class="text-sm tracking-[0.3em] text-gold uppercase mb-2">Save The Date</div>
-                    <div class="font-serif text-2xl text-white">May 17, 2026</div>
-                </div>
-                
-                <div class="mt-12 flex justify-center">
-                    <i class="fa-solid fa-chevron-down text-gold text-2xl animate-bounce"></i>
-                </div>
-            </div>
-        </section>
+// ── RSVP
+function doRSVP(type) {
+  const name = document.getElementById('rsvpName').value.trim();
+  const el = document.getElementById('rsvpResp');
+  if (!name) { el.textContent = 'Please enter your name first.'; el.classList.add('show'); return; }
+  el.innerHTML = type === 'yes'
+    ? `✦ JazakAllah Khairan, <em>${name}</em>! We are overjoyed you'll be with us. May Allah ease your journey. ✦`
+    : `✦ We understand, <em>${name}</em>. Your du'as and blessings from afar mean the world to us. ✦`;
+  el.classList.add('show');
+}
 
+// ── WHATSAPP WISHES
+function sendWishes() {
+  const name = document.getElementById('wName').value.trim();
+  const msg  = document.getElementById('wMsg').value.trim();
+  if (!name) { alert('Please enter your name.'); return; }
+  if (!msg)  { alert('Please write your wish or du\'a.'); return; }
+  const full = `Assalamu Alaikum, I am ${name}. ${msg}`;
+  window.open(`https://wa.me/919840928566?text=${encodeURIComponent(full)}`, '_blank');
+}
 
-        <!-- 2. FAMILY DETAILS SECTION -->
-        <section class="relative py-20 px-6 bg-[#181818] border-t border-b border-amber-900/20">
-            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 text-center relative z-10">
-                
-                <!-- Bride's Family -->
-                <div class="glass-card p-10 rounded-2xl border-gold reveal relative">
-                    <div class="corner-top-left"></div>
-                    <div class="corner-bottom-right"></div>
-                    <div class="mb-4">
-                        <i class="fa-solid fa-venus text-gold text-3xl opacity-80"></i>
-                    </div>
-                    <h3 class="font-serif text-2xl text-gold mb-2">The Bride</h3>
-                    <h2 class="font-serif text-3xl text-white mb-4">Seeni Sabrin Fathima</h2>
-                    <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
-                    <p class="text-gray-400 text-sm tracking-wider uppercase mb-2">Daughter of</p>
-                    <p class="text-white text-lg font-medium">Mr. Hassan Abdul Cader</p>
-                    <p class="text-white text-lg font-medium">&</p>
-                    <p class="text-white text-lg font-medium">Mrs. Farzana</p>
-                </div>
-
-                <!-- Groom's Family -->
-                <div class="glass-card p-10 rounded-2xl border-gold reveal relative">
-                    <div class="corner-top-left"></div>
-                    <div class="corner-bottom-right"></div>
-                    <div class="mb-4">
-                        <i class="fa-solid fa-mars text-gold text-3xl opacity-80"></i>
-                    </div>
-                    <h3 class="font-serif text-2xl text-gold mb-2">The Groom</h3>
-                    <h2 class="font-serif text-3xl text-white mb-4">F. Syed Abu Thahir</h2>
-                    <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
-                    <p class="text-gray-400 text-sm tracking-wider uppercase mb-2">Son of</p>
-                    <p class="text-white text-lg font-medium">Mr. A. S. Feroz Khan</p>
-                    <p class="text-white text-lg font-medium">&</p>
-                    <p class="text-white text-lg font-medium">Mrs. S. Nazrath Begum</p>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- 3. EVENT DETAILS SECTION -->
-        <section class="relative py-20 px-6 bg-[#121212] bg-pattern">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-serif text-4xl text-gold mb-4 reveal">Wedding Events</h2>
-                <p class="text-gray-400 mb-12 tracking-wider reveal">Insha'Allah, the celebration will take place on</p>
-
-                <div class="mb-12 glass-card inline-block py-6 px-12 rounded-xl border border-gold/50 reveal">
-                    <h3 class="font-serif text-2xl text-white mb-2">Sunday, May 17, 2026</h3>
-                    <p class="text-gold tracking-widest text-sm uppercase">30 Dhul Qa’dah 1447 AH</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8 mt-4">
-                    <!-- Nikah -->
-                    <div class="glass-card p-8 rounded-2xl border-gold group hover:scale-105 transition-all duration-500 reveal">
-                        <div class="mb-4 inline-block p-4 rounded-full border border-amber-600/30 group-hover:border-amber-500 transition-colors">
-                            <i class="fa-solid fa-ring text-gold text-3xl"></i>
-                        </div>
-                        <h3 class="font-serif text-3xl text-white mb-4">Nikah</h3>
-                        <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
-                        <p class="text-gray-400 mb-2">Timing</p>
-                        <p class="text-xl text-white font-semibold">11:00 AM – 12:00 PM</p>
-                    </div>
-
-                    <!-- Walimah -->
-                    <div class="glass-card p-8 rounded-2xl border-gold group hover:scale-105 transition-all duration-500 reveal">
-                        <div class="mb-4 inline-block p-4 rounded-full border border-amber-600/30 group-hover:border-amber-500 transition-colors">
-                            <i class="fa-solid fa-utensils text-gold text-3xl"></i>
-                        </div>
-                        <h3 class="font-serif text-3xl text-white mb-4">Walimah</h3>
-                        <div class="h-[1px] w-16 bg-amber-600/40 mx-auto mb-4"></div>
-                        <p class="text-gray-400 mb-2">Timing</p>
-                        <p class="text-xl text-white font-semibold">12:00 PM onwards</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 4. LOCATION SECTION -->
-        <section class="relative py-20 px-6 bg-[#181818]">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-serif text-4xl text-gold mb-4 reveal">The Venue</h2>
-                <p class="text-white text-xl mb-8 font-light reveal">Thahir Bungalow, Keelakarai</p>
-
-                <div class="rounded-2xl overflow-hidden glass-card h-80 w-full mb-8 border border-amber-600/20 glow-gold reveal">
-                    <!-- Standard Google Maps Embed. Since real embed links are URL-specific, using a clean placeholder iframe or precise coordinates if known -->
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.670692735163!2d78.77708577583689!3d9.228186485854747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0185994270d4d1%3A0xe543fa02bc56041c!2sKilakarai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709400000000!5m2!1sen!2sin" 
-                        class="w-full h-full border-0 grayscale opacity-80" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-
-                <a href="https://maps.app.goo.gl/7rCX4PjFb7jahnem7" target="_blank" class="inline-flex items-center px-8 py-3 glass-card text-gold font-medium rounded-full uppercase tracking-wider text-sm border-gold glow-gold-hover transition-all duration-300 transform hover:scale-105 reveal">
-                    <i class="fa-solid fa-map-location-dot mr-2"></i> Open in Google Maps
-                </a>
-            </div>
-        </section>
-
-
-        <!-- 5. CONTACT SECTION -->
-        <section class="relative py-16 px-6 bg-[#121212] border-t border-amber-900/20">
-            <div class="max-w-md mx-auto text-center glass-card p-8 rounded-2xl border border-gold/40 reveal">
-                <h3 class="font-serif text-2xl text-gold mb-6">Contact & Enquiries</h3>
-                
-                <div class="flex flex-col space-y-4">
-                    <a href="tel:9840950555" class="flex items-center justify-center space-x-3 text-white hover:text-gold transition-colors">
-                        <i class="fa-solid fa-phone text-gold"></i>
-                        <span class="text-lg">98409 50555</span>
-                    </a>
-                    <a href="tel:9840928566" class="flex items-center justify-center space-x-3 text-white hover:text-gold transition-colors">
-                        <i class="fa-solid fa-phone text-gold"></i>
-                        <span class="text-lg">98409 28566</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 6. RSVP SECTION -->
-        <section class="relative py-20 px-6 bg-[#181818] bg-pattern">
-            <div class="max-w-lg mx-auto glass-card p-10 rounded-2xl border-gold reveal">
-                <h2 class="font-serif text-3xl text-gold text-center mb-4">R.S.V.P</h2>
-                <p class="text-center text-gray-400 mb-8">Please let us know your presence</p>
-
-                <form id="rsvpForm" class="space-y-6">
-                    <div>
-                        <label class="block text-gray-300 text-sm mb-2 font-medium tracking-wide">Full Name</label>
-                        <input type="text" id="rsvp_name" required class="w-full bg-[#121212] border border-amber-600/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold transition-colors" placeholder="Enter your name">
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <button type="button" onclick="handleRSVP('Will Attend')" class="w-full py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-                            Will Attend
-                        </button>
-                        <button type="button" onclick="handleRSVP('Cannot Attend')" class="w-full py-3 border border-gray-600 text-gray-300 hover:text-white hover:border-white font-medium rounded-lg transform transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-                            Cannot Attend
-                        </button>
-                    </div>
-                </form>
-
-                <div id="rsvp-status" class="hidden mt-6 text-center text-gold font-medium p-4 border border-gold/30 rounded-lg glass-card animate-pulse">
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 7. WISH / GIFT SECTION -->
-        <section class="relative py-20 px-6 bg-[#121212]">
-            <div class="max-w-2xl mx-auto text-center">
-                <h2 class="font-serif text-4xl text-gold mb-4 reveal">Send Your Wishes</h2>
-                <p class="text-gray-400 mb-12 max-w-lg mx-auto reveal">Your prayers and blessings are the greatest gifts for us. If you wish to send a gift, you may use the details below.</p>
-
-                <div class="grid md:grid-cols-2 gap-8 reveal">
-                    <!-- Bank Transfer Details -->
-                    <div class="glass-card p-8 rounded-2xl border-gold text-left h-full flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-serif text-xl text-white mb-4"><i class="fa-solid fa-building-columns text-gold mr-2"></i> Bank Transfer</h3>
-                            <p class="text-gray-400 text-sm mb-1">Account Holder</p>
-                            <p class="text-white font-medium mb-3">F. Syed Abu Thahir</p>
-                            
-                            <p class="text-gray-400 text-sm mb-1">Account Number</p>
-                            <p id="accNumber" class="text-white font-medium mb-3">123456789012</p>
-                            
-                            <p class="text-gray-400 text-sm mb-1">IFSC Code</p>
-                            <p id="ifscCode" class="text-white font-medium">SBIN0012345</p>
-                        </div>
-                        <button onclick="copyToClipboard('accNumber', 'Account Number')" class="mt-6 w-full py-2.5 glass-card text-gold rounded-lg text-sm border-gold hover:bg-gold hover:text-black transition-all duration-300 font-medium cursor-pointer">
-                            Copy Account Details
-                        </button>
-                    </div>
-
-                    <!-- UPI Details -->
-                    <div class="glass-card p-8 rounded-2xl border-gold text-left h-full flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-serif text-xl text-white mb-4"><i class="fa-solid fa-mobile-screen text-gold mr-2"></i> UPI Address</h3>
-                            <p class="text-gray-400 text-sm mb-1">Name</p>
-                            <p class="text-white font-medium mb-3">Syed Abu Thahir</p>
-                            
-                            <p class="text-gray-400 text-sm mb-1">UPI ID</p>
-                            <p id="upiId" class="text-white font-medium text-lg">syed.ibrahim.thahir@fam</p>
-                        </div>
-                        <button onclick="copyToClipboard('upiId', 'UPI ID')" class="mt-6 w-full py-2.5 glass-card text-gold rounded-lg text-sm border-gold hover:bg-gold hover:text-black transition-all duration-300 font-medium cursor-pointer">
-                            Copy UPI ID
-                        </button>
-                    </div>
-                </div>
-                
-                <div id="copy-toast" class="fixed top-12 left-1/2 transform -translate-x-1/2 glass-card border-gold text-gold font-medium text-sm py-3 px-8 rounded-full shadow-2xl tracking-wide opacity-0 transition-opacity duration-300 z-50 pointer-events-none">
-                    Copied to clipboard!
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 8. FOOTER -->
-        <footer class="relative py-16 px-6 bg-[#0a0a0a] text-center border-t border-amber-900/40">
-            <div class="max-w-2xl mx-auto">
-                <i class="fa-solid fa-heart text-gold text-2xl mb-4 gold-pulse"></i>
-                <h2 class="font-serif text-2xl md:text-3xl text-gold mb-4">May Allah bless this union with love and barakah.</h2>
-                <p class="text-gray-500 font-light text-sm tracking-widest uppercase mb-8">Barakallahu lakum wa baraka 'alaykum wa jama'a baynakuma fi khayr</p>
-                <div class="h-[1px] w-32 bg-amber-600/30 mx-auto mb-8"></div>
-                <p class="text-gray-600 text-xs tracking-wide">&copy; 2026 Seeni Sabrin Fathima & F. Syed Abu Thahir. All Rights Reserved.</p>
-            </div>
-        </footer>
-
-    </div>
-
-    <script>
-        // Opening Invitation Controller
-        const openingOverlay = document.getElementById('opening-overlay');
-        const mainContent = document.getElementById('main-content');
-        const openInvitationBtn = document.getElementById('openInvitationBtn');
-        const bgMusic = document.getElementById('bgMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        const musicIcon = document.getElementById('musicIcon');
-
-        let isMusicPlaying = false;
-
-        openInvitationBtn.addEventListener('click', () => {
-            // Dismiss Overlay
-            openingOverlay.classList.add('slide-up');
-            
-            // Show main content
-            mainContent.classList.remove('opacity-0');
-            
-            // Allow interactions
-            document.body.classList.remove('select-none');
-
-            // Autoplay music
-            bgMusic.play().then(() => {
-                isMusicPlaying = true;
-                musicIcon.classList.add('spin-slow');
-                musicIcon.classList.remove('fa-volume-xmark');
-                musicIcon.classList.add('fa-music');
-            }).catch(error => {
-                console.log("Music play blocked or failed: ", error);
-            });
-
-            // Start reveal logic
-            handleScrollReveal();
-        });
-
-        // Music Toggle Control
-        musicToggle.addEventListener('click', () => {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                isMusicPlaying = false;
-                musicIcon.classList.remove('spin-slow');
-                musicIcon.classList.remove('fa-music');
-                musicIcon.classList.add('fa-volume-xmark');
-            } else {
-                bgMusic.play();
-                isMusicPlaying = true;
-                musicIcon.classList.add('spin-slow');
-                musicIcon.classList.remove('fa-volume-xmark');
-                musicIcon.classList.add('fa-music');
-            }
-        });
-
-        // RSVP Handler
-        function handleRSVP(status) {
-            const nameInput = document.getElementById('rsvp_name');
-            const statusBox = document.getElementById('rsvp-status');
-
-            if (!nameInput.value.trim()) {
-                alert("Please enter your name.");
-                return;
-            }
-
-            // Hide form inputs for a moment or simulate sending
-            statusBox.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Thank you, ${nameInput.value.trim()}! Your response "${status}" has been saved.`;
-            statusBox.classList.remove('hidden');
-
-            nameInput.value = ''; // clear input
-        }
-
-        // Copy to clipboard utility
-        function copyToClipboard(elementId, label) {
-            const textToCopy = document.getElementById(elementId).innerText;
-            
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const toast = document.getElementById('copy-toast');
-                toast.innerText = `${label} copied successfully!`;
-                toast.classList.remove('opacity-0');
-                
-                setTimeout(() => {
-                    toast.classList.add('opacity-0');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        }
-
-        // Scroll Reveal Utility
-        function handleScrollReveal() {
-            const reveals = document.querySelectorAll('.reveal');
-
-            const observerOptions = {
-                threshold: 0.15,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, observerOptions);
-
-            reveals.forEach(reveal => {
-                observer.observe(reveal);
-            });
-        }
-
-        // Run scroll reveal setup on dom load
-        document.addEventListener("DOMContentLoaded", function() {
-            // Keep body non-interactive during overlay
-            document.body.classList.add('select-none');
-        });
-    </script>
+// ── NAV HIGHLIGHT
+window.addEventListener('scroll', () => {
+  const ids = ['hero','family','events','location','contact','rsvp','wishes'];
+  let cur = '';
+  ids.forEach(id => { const el=document.getElementById(id); if(el && window.scrollY >= el.offsetTop-220) cur=id; });
+  document.querySelectorAll('.nav-item').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#'+cur);
+  });
+}, { passive: true });
+</script>
 </body>
 </html>
