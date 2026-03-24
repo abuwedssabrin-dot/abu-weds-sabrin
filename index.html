@@ -309,8 +309,11 @@ section + section { border-top: 1px solid rgba(201,168,76,0.07); }
   color: var(--text-white); font-weight: 500; line-height: 1.5; margin-bottom: 0.5rem;
 }
 /* TASK 1: Slightly increased parent name font sizes */
-.family-parent { font-size: clamp(0.82rem, 2.2vw, 0.92rem); color: var(--text-muted); line-height: 1.95; }
+.family-parent { font-size: clamp(0.82rem, 2.2vw, 0.92rem); color: var(--text-muted); line-height: 1.6; }
 .family-parent strong { color: var(--text-cream); font-weight: 400; }
+.fam-pblock { display: block; margin-top: 0.6rem; }
+.fam-grandparent { display: block; font-size: clamp(0.58rem, 1.6vw, 0.65rem); opacity: 0.58; margin-top: 0.18rem; line-height: 1.4; }
+.fam-pamp { display: block; margin: 0.5rem 0 0; color: var(--gold-dim); font-size: 0.78rem; }
 .fam-divider {
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
 }
@@ -833,8 +836,8 @@ footer {
   <section id="family">
     <div class="container">
       <div style="text-align:center;">
-        <div class="section-badge reveal">With the blessings of our families</div>
-        <h2 class="section-title reveal">Our Families</h2>
+        <div class="section-badge reveal">By the Grace of Allah ﷻ</div>
+        <h2 class="section-title reveal">Union of Two Families</h2>
         <div class="gold-rule reveal"></div>
         <p class="family-subtitle reveal rd1">
           Assalamu Alaikum Wa Rahmatullahi Wa Barakatuh<br>
@@ -847,14 +850,10 @@ footer {
           <div class="family-person">F. Syed Abu Thahir</div>
           <div class="gold-rule" style="width:32px;margin:.8rem auto;"></div>
           <div class="family-parent">
-            Son of<br><br>
-            <strong>Mr. A. S. Syed Feroz Khan</strong><br>
-            <span style="font-size:0.72rem;opacity:0.65;">Son of Syed Abuthahir &amp; Egaya Beevi</span>
-            <br><br>
-            <span style="color:var(--gold-dim);font-size:0.78rem;">&amp;</span>
-            <br><br>
-            <strong>Mrs. Nazrath Begum</strong><br>
-            <span style="font-size:0.72rem;opacity:0.65;">Daughter of S.S Syed Ibrahim &amp; Saharban Beevi</span>
+            Son of
+            <span class="fam-pblock"><strong>Mr. A. S. Syed Feroz Khan</strong><span class="fam-grandparent">Son of Syed Abuthahir &amp; Egaya Beevi</span></span>
+            <span class="fam-pamp">&amp;</span>
+            <span class="fam-pblock"><strong>Mrs. Nazrath Begum</strong><span class="fam-grandparent">Daughter of S.S Syed Ibrahim &amp; Saharban Beevi</span></span>
           </div>
         </div>
         <div class="fam-divider">
@@ -867,14 +866,10 @@ footer {
           <div class="family-person">H. Seeni Sabrin Fathima</div>
           <div class="gold-rule" style="width:32px;margin:.8rem auto;"></div>
           <div class="family-parent">
-            Daughter of<br><br>
-            <strong>Mr. Hassan Abdul Cader</strong><br>
-            <span style="font-size:0.72rem;opacity:0.65;">Son of Seyed Ibrahim &amp; Fareetha Beevi</span>
-            <br><br>
-            <span style="color:var(--gold-dim);font-size:0.78rem;">&amp;</span>
-            <br><br>
-            <strong>Mrs. Farzana</strong><br>
-            <span style="font-size:0.72rem;opacity:0.65;">Daughter of Jahubar Sathik &amp; Athabiya Beevi</span>
+            Daughter of
+            <span class="fam-pblock"><strong>Mr. Hassan Abdul Cader</strong><span class="fam-grandparent">Son of Seyed Ibrahim &amp; Fareetha Beevi</span></span>
+            <span class="fam-pamp">&amp;</span>
+            <span class="fam-pblock"><strong>Mrs. Farzana</strong><span class="fam-grandparent">Daughter of Jahubar Sathik &amp; Athabiya Beevi</span></span>
           </div>
         </div>
       </div>
