@@ -438,6 +438,21 @@ section + section { border-top: 1px solid rgba(201,168,76,0.07); }
 .rsvp-btn.yes { border-color: var(--gold); color: var(--gold-light); }
 .rsvp-btn.yes:hover { background: rgba(201,168,76,0.16); box-shadow: 0 0 22px rgba(201,168,76,0.2); }
 .rsvp-btn.no:hover { background: rgba(255,255,255,0.05); }
+.rsvp-btn.selected.yes { background: rgba(201,168,76,0.18); box-shadow: 0 0 22px rgba(201,168,76,0.2); }
+.rsvp-btn.selected.no { background: rgba(255,255,255,0.06); }
+.rsvp-btn:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+.rsvp-submit {
+  width: 100%; margin-top: 1rem; padding: 0.95rem 1rem;
+  background: linear-gradient(135deg, rgba(201,168,76,0.22), rgba(201,168,76,0.08));
+  border: 1px solid var(--gold); color: var(--gold-light);
+  font-family: 'Poppins', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  cursor: pointer; border-radius: 3px; transition: all 0.3s ease;
+  display: none;
+}
+.rsvp-submit.visible { display: block; animation: fadeUp 0.4s ease forwards; }
+.rsvp-submit:hover { background: rgba(201,168,76,0.28); box-shadow: 0 0 30px rgba(201,168,76,0.25); color: #fff; }
+.rsvp-submit:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
 .rsvp-resp {
   margin-top: 1.5rem; padding: 1.2rem;
   border: 1px solid rgba(201,168,76,0.2); border-radius: var(--radius);
@@ -954,9 +969,10 @@ footer {
         <label class="form-label" for="rsvpName">Your Name</label>
         <input type="text" id="rsvpName" class="form-input" placeholder="Enter your full name">
         <div class="rsvp-btns">
-          <button class="rsvp-btn yes" onclick="doRSVP('yes')">✓ Will Attend</button>
-          <button class="rsvp-btn no"  onclick="doRSVP('no')">✗ Cannot Attend</button>
+          <button class="rsvp-btn yes" id="rsvpBtnYes" onclick="selectRSVP('yes')">✓ Will Attend</button>
+          <button class="rsvp-btn no"  id="rsvpBtnNo"  onclick="selectRSVP('no')">✗ Cannot Attend</button>
         </div>
+        <button class="rsvp-submit" id="rsvpSubmit" onclick="submitRSVP()">Confirm RSVP</button>
         <div class="rsvp-resp" id="rsvpResp"></div>
       </div>
     </div>
@@ -1316,17 +1332,30 @@ function startCountdown() {
 
 // ── RSVP
 const RSVP_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz4rs7RlGuDP8qiN1xHd0VlRc_nPXmGOjE83IzpL_Xvb-yR-zXoiVb6ez1C9ayj9Y7l/exec';
-function doRSVP(type) {
+var rsvpSelection = null;
+function selectRSVP(type) {
+  rsvpSelection = type;
+  document.getElementById('rsvpBtnYes').classList.toggle('selected', type === 'yes');
+  document.getElementById('rsvpBtnNo').classList.toggle('selected', type === 'no');
+  document.getElementById('rsvpSubmit').classList.add('visible');
+}
+function submitRSVP() {
   const name = document.getElementById('rsvpName').value.trim();
   const el = document.getElementById('rsvpResp');
   if (!name) { el.textContent = 'Please enter your name first.'; el.classList.add('show'); return; }
+  if (!rsvpSelection) return;
+  // Lock the form
+  document.getElementById('rsvpBtnYes').disabled = true;
+  document.getElementById('rsvpBtnNo').disabled = true;
+  document.getElementById('rsvpSubmit').disabled = true;
+  document.getElementById('rsvpName').disabled = true;
   fetch(RSVP_SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: name, attending: type === 'yes' ? 'Yes' : 'No' })
+    body: JSON.stringify({ name: name, attending: rsvpSelection === 'yes' ? 'Yes' : 'No' })
   });
-  el.innerHTML = type === 'yes'
+  el.innerHTML = rsvpSelection === 'yes'
     ? `✦ JazakAllah Khairan, <em>${name}</em>! We are overjoyed you'll be with us. May Allah ease your journey. ✦`
     : `✦ We understand, <em>${name}</em>. Your du'as and blessings from afar mean the world to us. ✦`;
   el.classList.add('show');
